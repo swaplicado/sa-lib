@@ -46,10 +46,10 @@ public abstract class SXmlDocument extends SXmlElement {
         String aux = "";
         String xml = "";
 
-        xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\" ?>\n";
+        xml = SXmlConsts.XML_HEADER;
 
         if (mbAddDefaultHeader) {
-            xml += "<!-- Copyright 2010-2015 Software Aplicado, SA de CV. All rights reserved. -->\n";
+            xml += "<!-- Copyright Software Aplicado, SA de CV. All rights reserved. -->\n";
         }
 
         xml += "<" + msName + (!mbAddDefaultHeader ? "" : " xmlns=\"http://www.swaplicado.com.mx\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
