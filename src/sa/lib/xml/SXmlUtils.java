@@ -153,7 +153,6 @@ public abstract class SXmlUtils {
         */
         
         // load XSLT file from its URL:
-//        URL url = new URL(xsltFile);
         File file = new File(xsltFile);
         
         /*  XXX added due to character set issue that breaks transformation of XML
