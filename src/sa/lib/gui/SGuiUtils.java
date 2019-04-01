@@ -40,7 +40,7 @@ public abstract class SGuiUtils {
     }
 
     /**
-     * @param maskErp The following characters can be specified:
+     * @param pattern The following characters can be specified:
      *  y   Any number (Character.isDigit).
      *  M   Any number (Character.isDigit).
      *  d   Any number (Character.isDigit).
@@ -286,7 +286,7 @@ public abstract class SGuiUtils {
         return name;
     }
 
-    public static void pickDate(SGuiDatePicker picker, Date date, SGuiFieldDate field) {
+    public static void pickDate(final SGuiDatePicker picker, final Date date, final SGuiFieldDate field) {
         picker.resetPicker();
         picker.setOption(date);
         picker.setPickerVisible(true);
@@ -297,7 +297,7 @@ public abstract class SGuiUtils {
         }
     }
 
-    public static SGuiValidation validateDateRange(SGuiFieldDate fieldDateStart, SGuiFieldDate fieldDateEnd) {
+    private static SGuiValidation validateDateRange(final SGuiFieldDate fieldDateStart, final SGuiFieldDate fieldDateEnd, final boolean validateYears) {
         Date dateStart = fieldDateStart.getValue();
         Date dateEnd = fieldDateEnd.getValue();
         SGuiValidation validation = new SGuiValidation();
@@ -310,7 +310,7 @@ public abstract class SGuiUtils {
             validation.setMessage("No se ha especificado un valor para la fecha final.");
             validation.setComponent(fieldDateEnd.getComponent());
         }
-        else if (SLibTimeUtils.digestYear(dateStart)[0] != SLibTimeUtils.digestYear(dateEnd)[0]) {
+        else if (!validateYears && SLibTimeUtils.digestYear(dateStart)[0] != SLibTimeUtils.digestYear(dateEnd)[0]) {
             validation.setMessage("El año de las fechas inicial y final debe ser el mismo.");
             validation.setComponent(fieldDateStart.getComponent());
         }
@@ -320,6 +320,14 @@ public abstract class SGuiUtils {
         }
 
         return validation;
+    }
+
+    public static SGuiValidation validateDateRange(final SGuiFieldDate fieldDateStart, final SGuiFieldDate fieldDateEnd) {
+        return validateDateRange(fieldDateStart, fieldDateEnd, true);
+    }
+
+    public static SGuiValidation validateDateRangeIgnoreYears(final SGuiFieldDate fieldDateStart, final SGuiFieldDate fieldDateEnd) {
+        return validateDateRange(fieldDateStart, fieldDateEnd, false);
     }
 
     public static boolean computeValidation(final SGuiClient client, final SGuiValidation validation) {
