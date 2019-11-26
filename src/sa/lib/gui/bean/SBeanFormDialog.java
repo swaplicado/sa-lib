@@ -16,6 +16,7 @@ import java.util.Vector;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import sa.lib.SLibConsts;
 import sa.lib.SLibUtils;
 import sa.lib.db.SDbRegistry;
@@ -157,7 +158,12 @@ public abstract class SBeanFormDialog extends JDialog implements SGuiForm {
 
             for (SGuiField field : moFields.getFields()) {
                 if (field.isFocusable()) {
-                    field.getComponent().requestFocus();
+                    if (field instanceof JSpinner && ((JSpinner) field).getEditor() instanceof JSpinner.NumberEditor) {
+                        ((JSpinner.NumberEditor) ((JSpinner) field).getEditor()).getTextField().requestFocusInWindow();
+                    }
+                    else {
+                        field.getComponent().requestFocusInWindow();
+                    }
                     break;
                 }
             }

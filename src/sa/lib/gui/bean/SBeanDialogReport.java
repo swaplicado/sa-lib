@@ -16,6 +16,7 @@ import java.util.HashMap;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import sa.lib.SLibConsts;
 import sa.lib.gui.SGuiClient;
 import sa.lib.gui.SGuiField;
@@ -143,7 +144,12 @@ public abstract class SBeanDialogReport extends JDialog {
 
             for (SGuiField field : moFields.getFields()) {
                 if (field.isFocusable()) {
-                    field.getComponent().requestFocus();
+                    if (field instanceof JSpinner && ((JSpinner) field).getEditor() instanceof JSpinner.NumberEditor) {
+                        ((JSpinner.NumberEditor) ((JSpinner) field).getEditor()).getTextField().requestFocusInWindow();
+                    }
+                    else {
+                        field.getComponent().requestFocusInWindow();
+                    }
                     break;
                 }
             }
