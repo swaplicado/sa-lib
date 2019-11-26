@@ -212,6 +212,8 @@ public abstract class SBeanForm extends JDialog implements SGuiForm {
                 jbCancel.requestFocus();
             }
             else {
+                boolean focusRequested = false;
+                
                 for (SGuiField field : moFields.getFields()) {
                     if (field.isFocusable()) {
                         if (field instanceof JSpinner && ((JSpinner) field).getEditor() instanceof JSpinner.NumberEditor) {
@@ -220,7 +222,18 @@ public abstract class SBeanForm extends JDialog implements SGuiForm {
                         else {
                             field.getComponent().requestFocusInWindow();
                         }
+                        
+                        focusRequested = true;
                         break;
+                    }
+                }
+                
+                if (!focusRequested) {
+                    if (jbEdit.isEnabled()) {
+                        jbEdit.requestFocusInWindow();
+                    }
+                    else {
+                        jbCancel.requestFocusInWindow();
                     }
                 }
             }
