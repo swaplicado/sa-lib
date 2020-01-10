@@ -310,7 +310,7 @@ public abstract class SGuiUtils {
             validation.setMessage("No se ha especificado un valor para la fecha final.");
             validation.setComponent(fieldDateEnd.getComponent());
         }
-        else if (!validateYears && SLibTimeUtils.digestYear(dateStart)[0] != SLibTimeUtils.digestYear(dateEnd)[0]) {
+        else if (validateYears && SLibTimeUtils.digestYear(dateStart)[0] != SLibTimeUtils.digestYear(dateEnd)[0]) {
             validation.setMessage("El año de las fechas inicial y final debe ser el mismo.");
             validation.setComponent(fieldDateStart.getComponent());
         }
