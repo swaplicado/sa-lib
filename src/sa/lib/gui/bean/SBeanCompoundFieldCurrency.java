@@ -107,11 +107,13 @@ public class SBeanCompoundFieldCurrency extends JPanel implements SGuiCompoundFi
     public void setEnabled(boolean enabled) {
         moDecCurrency.setEnabled(enabled);
         jtfCurrencyCode.setEnabled(enabled);
+        super.setEnabled(enabled);
     }
 
     @Override
     public void setEditable(boolean editable) {
         moDecCurrency.setEditable(editable);
+        super.setFocusable(editable);
     }
 
     @Override
