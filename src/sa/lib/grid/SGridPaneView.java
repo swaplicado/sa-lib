@@ -456,8 +456,8 @@ public abstract class SGridPaneView extends JPanel implements SGridPane, ListSel
         SGuiUtils.createActionMap(this, this, "actionGridClearSettings", "gridClearSettings", KeyEvent.VK_L, KeyEvent.CTRL_DOWN_MASK);
         SGuiUtils.createActionMap(this, this, "actionGridReload", "gridReload", KeyEvent.VK_R, KeyEvent.CTRL_DOWN_MASK);
         SGuiUtils.createActionMap(this, this, "actionGridSeekValue", "gridSeekValue", KeyEvent.VK_B, KeyEvent.CTRL_DOWN_MASK);
-        SGuiUtils.createActionMap(this, this, "actionGridSearchValue", "gridSeekValue", KeyEvent.VK_B, KeyEvent.CTRL_DOWN_MASK);
-        SGuiUtils.createActionMap(this, this, "actionGridSearchNextValue", "gridSeekNextValue", KeyEvent.VK_F3, 0);
+        SGuiUtils.createActionMap(this, this, "actionGridSearchValue", "gridSearchValue", KeyEvent.VK_B, KeyEvent.CTRL_DOWN_MASK);
+        SGuiUtils.createActionMap(this, this, "actionGridSearchNextValue", "gridSearchNextValue", KeyEvent.VK_F3, 0);
     }
 
     protected void computeUserGui() {
