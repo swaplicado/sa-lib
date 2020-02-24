@@ -139,6 +139,8 @@ public abstract class SGridPaneView extends JPanel implements SGridPane, ListSel
         jpStatusLeft = new javax.swing.JPanel();
         jtfRows = new javax.swing.JTextField();
         jpStatusCenter = new javax.swing.JPanel();
+        jtfGridSearch = new javax.swing.JTextField();
+        jbGridSearchNext = new javax.swing.JButton();
         jpStatusRight = new javax.swing.JPanel();
         jtbAutoReload = new javax.swing.JToggleButton();
 
@@ -302,6 +304,26 @@ public abstract class SGridPaneView extends JPanel implements SGridPane, ListSel
         jpStatus.add(jpStatusLeft, java.awt.BorderLayout.WEST);
 
         jpStatusCenter.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 0));
+
+        jtfGridSearch.setToolTipText("Buscar (Ctrl + B)");
+        jtfGridSearch.setPreferredSize(new java.awt.Dimension(100, 23));
+        jtfGridSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfGridSearchActionPerformed(evt);
+            }
+        });
+        jpStatusCenter.add(jtfGridSearch);
+
+        jbGridSearchNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sa/lib/img/cmd_grid_next.gif"))); // NOI18N
+        jbGridSearchNext.setToolTipText("Siguiente (F3)");
+        jbGridSearchNext.setPreferredSize(new java.awt.Dimension(23, 23));
+        jbGridSearchNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbGridSearchNextActionPerformed(evt);
+            }
+        });
+        jpStatusCenter.add(jbGridSearchNext);
+
         jpStatus.add(jpStatusCenter, java.awt.BorderLayout.CENTER);
 
         jpStatusRight.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 0));
@@ -361,6 +383,14 @@ public abstract class SGridPaneView extends JPanel implements SGridPane, ListSel
     private void jtbAutoReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtbAutoReloadActionPerformed
         actionToggleAutoReload();
     }//GEN-LAST:event_jtbAutoReloadActionPerformed
+
+    private void jtfGridSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfGridSearchActionPerformed
+        actionGridSearchValue();
+    }//GEN-LAST:event_jtfGridSearchActionPerformed
+
+    private void jbGridSearchNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGridSearchNextActionPerformed
+        actionGridSearchNextValue();
+    }//GEN-LAST:event_jbGridSearchNextActionPerformed
 
     private void initComponentsCustom() {
         moModel = new SGridModel();
@@ -1105,6 +1135,18 @@ public abstract class SGridPaneView extends JPanel implements SGridPane, ListSel
         }
     }
 
+    public void actionGridSearchValue() {
+        if (jtTable.getRowCount() > 0) {
+            SGridUtils.searchValue(this, jtfGridSearch.getText(), true);
+        }
+    }
+
+    public void actionGridSearchNextValue() {
+        if (jtTable.getRowCount() > 0) {
+            SGridUtils.searchValue(this, jtfGridSearch.getText(), false);
+        }
+    }
+
     public void actionToggleFilterDeleted() {
         if (jtbFilterDeleted.isEnabled()) {
             moFiltersMap.put(SGridConsts.FILTER_DELETED, jtbFilterDeleted.isSelected());
@@ -1123,6 +1165,7 @@ public abstract class SGridPaneView extends JPanel implements SGridPane, ListSel
     private javax.swing.JButton jbGridClearSettings;
     private javax.swing.JButton jbGridReload;
     private javax.swing.JButton jbGridSaveCsv;
+    private javax.swing.JButton jbGridSearchNext;
     protected javax.swing.JButton jbRowCopy;
     protected javax.swing.JButton jbRowDelete;
     protected javax.swing.JButton jbRowDisable;
@@ -1145,6 +1188,7 @@ public abstract class SGridPaneView extends JPanel implements SGridPane, ListSel
     protected javax.swing.JTable jtTable;
     protected javax.swing.JToggleButton jtbAutoReload;
     protected javax.swing.JToggleButton jtbFilterDeleted;
+    private javax.swing.JTextField jtfGridSearch;
     private javax.swing.JTextField jtfRows;
     // End of variables declaration//GEN-END:variables
 

@@ -821,6 +821,31 @@ public abstract class SGridUtils {
         }
     }
 
+    public static void searchValue(SGridPane gridPane, String valueToSearch, boolean fromTop) {
+        int row = 0;
+        int col = 0;
+        int rows = gridPane.getTable().getRowCount();
+        int cols = gridPane.getTable().getColumnCount();
+        String valueToSearchUpper = valueToSearch.toUpperCase();
+        
+        if (!valueToSearchUpper.isEmpty()) {
+            if (rows > 0) {
+                row:
+                for (row = fromTop ? 0 : (gridPane.getTable().getSelectedRow() + 1); row < rows; row++) {
+                    col:
+                    for (col = 0; col < cols; col++) {
+                        if (gridPane.getTable().getValueAt(row, col) != null) {
+                            if (gridPane.getTable().getValueAt(row, col).toString().contains(valueToSearchUpper)) {
+                                gridPane.getTable().setRowSelectionInterval(row, row);
+                                break row;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     public static void saveCsv(SGridPane gridPane, java.lang.String title) {
         int col = 0;
         int colType = 0;
