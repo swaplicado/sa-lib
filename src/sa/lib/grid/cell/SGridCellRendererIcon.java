@@ -23,6 +23,7 @@ public class SGridCellRendererIcon extends DefaultTableCellRenderer {
     public static final ImageIcon moIconNull = new ImageIcon(new Object().getClass().getResource("/sa/lib/img/view_null.png"));
     public static final ImageIcon moIconAnnul = new ImageIcon(new Object().getClass().getResource("/sa/lib/img/view_annul.png"));
     public static final ImageIcon moIconCross = new ImageIcon(new Object().getClass().getResource("/sa/lib/img/view_cross.png"));
+    public static final ImageIcon moIconWarn = new ImageIcon(new Object().getClass().getResource("/sa/lib/img/view_warn.png"));
     public static final ImageIcon moIconOk = new ImageIcon(new Object().getClass().getResource("/sa/lib/img/view_ok.png"));
     public static final ImageIcon moIconDoc = new ImageIcon(new Object().getClass().getResource("/sa/lib/img/view_doc.png"));
     public static final ImageIcon moIconThumbsUp = new ImageIcon(new Object().getClass().getResource("/sa/lib/img/view_thum_up.png"));
@@ -66,8 +67,14 @@ public class SGridCellRendererIcon extends DefaultTableCellRenderer {
             case SGridConsts.ICON_CROSS:
                 moLabel.setIcon(moIconCross);
                 break;
+            case SGridConsts.ICON_WARN:
+                moLabel.setIcon(moIconWarn);
+                break;
             case SGridConsts.ICON_OK:
                 moLabel.setIcon(moIconOk);
+                break;
+            case SGridConsts.ICON_DOC:
+                moLabel.setIcon(moIconDoc);
                 break;
             case SGridConsts.ICON_THUMBS_UP:
                 moLabel.setIcon(moIconThumbsUp);
