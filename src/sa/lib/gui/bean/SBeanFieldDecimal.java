@@ -157,7 +157,7 @@ public class SBeanFieldDecimal extends JTextField implements SGuiFieldDecimal {
 
     @Override
     public int getDataType() {
-        return SLibConsts.DATA_TYPE_INT;
+        return SLibConsts.DATA_TYPE_DEC;
     }
 
     @Override
