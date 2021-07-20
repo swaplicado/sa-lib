@@ -30,6 +30,7 @@ public interface SGridPane {
     public void renderGrid();
     public void renderGridRows();
     public void initSortKeys();
+    public void initSortKeysDescending();
     public void putFilter(final int filterType, final Object filterValue);
 
     public void setGridRow(final SGridRow gridRow, final int row);

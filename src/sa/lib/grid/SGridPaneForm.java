@@ -873,6 +873,12 @@ public abstract class SGridPaneForm extends JPanel implements SGridPane, TableMo
     }
 
     @Override
+    public void initSortKeysDescending() {
+        miSortKeysList.clear();
+        miSortKeysList.add(new RowSorter.SortKey(0, SortOrder.DESCENDING));
+    }
+
+    @Override
     public void putFilter(final int filterType, final Object filterValue) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
