@@ -12,11 +12,12 @@
 package sa.lib.grid;
 
 import javax.swing.JPanel;
+import sa.lib.SLibTimeConsts;
 import sa.lib.SLibTimeUtils;
 import sa.lib.SLibUtils;
-import sa.lib.gui.SGuiYearMonthPicker;
 import sa.lib.gui.SGuiClient;
 import sa.lib.gui.SGuiConsts;
+import sa.lib.gui.SGuiYearMonthPicker;
 
 /**
  *
@@ -47,10 +48,13 @@ public class SGridFilterYearMonth extends JPanel implements SGridFilter {
     private void initComponents() {
 
         jtfPeriod = new javax.swing.JTextField();
+        jpAdjustment = new javax.swing.JPanel();
+        jbIncrementPeriod = new javax.swing.JButton();
+        jbDecrementPeriod = new javax.swing.JButton();
         jbPeriod = new javax.swing.JButton();
         jbCurrentPeriod = new javax.swing.JButton();
 
-        setLayout(new java.awt.FlowLayout(0, 5, 0));
+        setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 0));
 
         jtfPeriod.setEditable(false);
         jtfPeriod.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -59,6 +63,32 @@ public class SGridFilterYearMonth extends JPanel implements SGridFilter {
         jtfPeriod.setFocusable(false);
         jtfPeriod.setPreferredSize(new java.awt.Dimension(65, 23));
         add(jtfPeriod);
+
+        jpAdjustment.setLayout(new java.awt.GridLayout(2, 1, 0, 1));
+
+        jbIncrementPeriod.setText("+");
+        jbIncrementPeriod.setFocusable(false);
+        jbIncrementPeriod.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        jbIncrementPeriod.setPreferredSize(new java.awt.Dimension(20, 11));
+        jbIncrementPeriod.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbIncrementPeriodActionPerformed(evt);
+            }
+        });
+        jpAdjustment.add(jbIncrementPeriod);
+
+        jbDecrementPeriod.setText("‒");
+        jbDecrementPeriod.setFocusable(false);
+        jbDecrementPeriod.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        jbDecrementPeriod.setPreferredSize(new java.awt.Dimension(20, 11));
+        jbDecrementPeriod.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbDecrementPeriodActionPerformed(evt);
+            }
+        });
+        jpAdjustment.add(jbDecrementPeriod);
+
+        add(jpAdjustment);
 
         jbPeriod.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sa/lib/img/cal_cal.gif"))); // NOI18N
         jbPeriod.setToolTipText("Seleccionar período");
@@ -87,15 +117,27 @@ public class SGridFilterYearMonth extends JPanel implements SGridFilter {
         moYearMonthPicker.setVisible(true);
 
         if (moYearMonthPicker.getPickerResult() == SGuiConsts.FORM_RESULT_OK) {
+            // set period:
             setPeriod(moYearMonthPicker.getOption());
+            // then update filter into view, note that this WILL trigger a view update:
             moPaneView.putFilter(SGridConsts.FILTER_YEAR_MONTH, manPeriod);
         }
     }//GEN-LAST:event_jbPeriodActionPerformed
 
     private void jbCurrentPeriodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCurrentPeriodActionPerformed
+        // set period:
         setPeriod(SLibTimeUtils.digestMonth(miClient.getSession().getWorkingDate()));
+        // then update filter into view, note that this WILL trigger a view update:
         moPaneView.putFilter(SGridConsts.FILTER_YEAR_MONTH, manPeriod);
     }//GEN-LAST:event_jbCurrentPeriodActionPerformed
+
+    private void jbIncrementPeriodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbIncrementPeriodActionPerformed
+        adjustPeriod(Adjustment.Increment);
+    }//GEN-LAST:event_jbIncrementPeriodActionPerformed
+
+    private void jbDecrementPeriodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDecrementPeriodActionPerformed
+        adjustPeriod(Adjustment.Decrement);
+    }//GEN-LAST:event_jbDecrementPeriodActionPerformed
 
     private void initComponentsCustom() {
         moYearMonthPicker = new SGuiYearMonthPicker(miClient);
@@ -115,10 +157,46 @@ public class SGridFilterYearMonth extends JPanel implements SGridFilter {
         manPeriod = period;
         renderPeriod();
     }
+    
+    private void adjustPeriod(final Adjustment adjustment) {
+        int year = manPeriod[0];
+        int month = manPeriod[1];
+        
+        switch (adjustment) {
+            case Increment:
+                if (month < SLibTimeConsts.MONTH_MAX) {
+                    month++;
+                }
+                else {
+                    year++;
+                    month = SLibTimeConsts.MONTH_MIN;
+                }
+                break;
+            case Decrement:
+                if (month > SLibTimeConsts.MONTH_MIN) {
+                    month--;
+                }
+                else {
+                    year--;
+                    month = SLibTimeConsts.MONTH_MAX;
+                }
+                break;
+            default:
+                // do nothing
+        }
+        
+        // set period:
+        setPeriod(new int[] { year, month });
+        // then update filter into view, note that this WILL trigger a view update:
+        moPaneView.putFilter(SGridConsts.FILTER_YEAR, manPeriod);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jbCurrentPeriod;
+    private javax.swing.JButton jbDecrementPeriod;
+    private javax.swing.JButton jbIncrementPeriod;
     private javax.swing.JButton jbPeriod;
+    private javax.swing.JPanel jpAdjustment;
     private javax.swing.JTextField jtfPeriod;
     // End of variables declaration//GEN-END:variables
 
@@ -127,7 +205,14 @@ public class SGridFilterYearMonth extends JPanel implements SGridFilter {
      */
     @Override
     public void initFilter(final Object value) {
+        // set period:
         setPeriod((int[]) value);
+        // then update filter into view, note that this WILL NOT trigger a view update:
         moPaneView.getFiltersMap().put(SGridConsts.FILTER_YEAR_MONTH, manPeriod);
+    }
+    
+    private enum Adjustment {
+        Increment,
+        Decrement
     }
 }
