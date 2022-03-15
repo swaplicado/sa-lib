@@ -134,7 +134,8 @@ public class SGuiSession implements SGuiController {
     /**
      * Gets module by module type and subtype.
      * @param type Module type. Constants defined in DModConsts (MOD_...).
-     * @param type Module subtype. Constants defined in DModSysConsts (CS_MOD_...).
+     * @param subtype Module subtype. Constants defined in DModSysConsts (CS_MOD_...).
+     * @return 
      */
     public SGuiModule getModule(final int type, final int subtype) {
         SGuiModule module = null;
@@ -151,6 +152,9 @@ public class SGuiSession implements SGuiController {
 
     /**
      * Gets module by GUI type and subtype (i.e. registry, view, form, etc.).
+     * @param type Module type. Constants defined in DModConsts (MOD_...).
+     * @param subtype Module subtype. Constants defined in DModSysConsts (CS_MOD_...).
+     * @return 
      */
     public SGuiModule getModuleByGuiType(final int type, final int subtype) {
         SGuiModule module = null;
@@ -229,6 +233,7 @@ public class SGuiSession implements SGuiController {
      * Reads database registry (reading verbose mode).
      * @param type Registry type.
      * @param pk Registry primary key.
+     * @return
      */
     @Override
     public SDbRegistry readRegistry(final int type, final int[] pk) {
@@ -240,6 +245,7 @@ public class SGuiSession implements SGuiController {
      * @param type Registry type.
      * @param pk Registry primary key.
      * @param mode Reading mode. Constants defined in DDbConsts (MODE_VERBOSE, MODE_STEALTH).
+     * @return
      */
     @Override
     public SDbRegistry readRegistry(final int type, final int[] pk, final int mode) {
