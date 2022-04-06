@@ -66,6 +66,7 @@ public class SGuiSession implements SGuiController {
                 throw new Exception("No se ha definido la base de datos.");
             }
             else if (!moDatabase.isConnected()) {
+                System.out.println("Intentando reconectar la base de datos...");
                 if (moDatabase.reconnect() != SDbConsts.CONNECTION_OK) {
                     throw new Exception("No se pudo reconectar la base de datos.");
                 }
@@ -91,6 +92,8 @@ public class SGuiSession implements SGuiController {
     }
 
     private void prepareDatabase() {
+        System.out.println("Preparando el monitor de la base de datos...");
+        
         try {
             moDatabaseMonitor = new SDbDatabaseMonitor(moDatabase);
             moDatabaseMonitor.startThread();
