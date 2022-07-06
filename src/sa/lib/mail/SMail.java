@@ -40,7 +40,7 @@ public class SMail {
      * @param toRecipients Mail recipients list.
      */
     public SMail(SMailSender sender, String subject, String body, ArrayList<String> toRecipients) {
-        this(sender, subject, body, "", toRecipients, new ArrayList<String>(), new ArrayList<String>());
+        this(sender, subject, body, "", toRecipients, new ArrayList<>(), new ArrayList<>());
     }
 
     /**
@@ -51,7 +51,7 @@ public class SMail {
      * @param ccRecipients Mail carbon copy recipients list.
      */
     public SMail(SMailSender sender, String subject, String body, ArrayList<String> toRecipients, ArrayList<String> ccRecipients) {
-        this(sender, subject, body, "", toRecipients, ccRecipients, new ArrayList<String>());
+        this(sender, subject, body, "", toRecipients, ccRecipients, new ArrayList<>());
     }
 
     /**
@@ -83,7 +83,7 @@ public class SMail {
         maToRecipients = toRecipients;
         maCcRecipients = ccRecipients;
         maBccRecipients = bccRecipients;
-        maAttachments = new ArrayList<File>();
+        maAttachments = new ArrayList<>();
     }
 
     public void setSender(SMailSender o) { moSender = o; }
