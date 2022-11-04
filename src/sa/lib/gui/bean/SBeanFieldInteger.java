@@ -317,11 +317,6 @@ public class SBeanFieldInteger extends JTextField implements SGuiFieldInteger {
     }
 
     @Override
-    public void setIntegerFormat(final DecimalFormat format) {
-        moDecimalFormat = format;
-    }
-
-    @Override
     public void setGuiType(final int type) {
         mnGuiType = type;
 

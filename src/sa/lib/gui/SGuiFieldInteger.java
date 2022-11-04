@@ -5,8 +5,6 @@
 
 package sa.lib.gui;
 
-import java.text.DecimalFormat;
-
 /**
  *
  * @author Sergio Flores
@@ -17,7 +15,6 @@ public interface SGuiFieldInteger extends SGuiField {
     public Integer getDefaultValue();
 
     public void setIntegerSettings(final String name, final int guiType, final boolean mandatory);
-    public void setIntegerFormat(DecimalFormat format);
 
     public void setGuiType(final int type);
     public void setMandatory(final boolean mandatory);
