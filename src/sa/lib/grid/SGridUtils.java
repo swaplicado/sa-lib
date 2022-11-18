@@ -49,12 +49,18 @@ public abstract class SGridUtils {
     public static final SGridCellRendererNumber CellRendererCalendarYear = new SGridCellRendererNumber(SLibUtils.DecimalFormatCalendarYear);
     public static final SGridCellRendererNumber CellRendererCalendarMonth = new SGridCellRendererNumber(SLibUtils.DecimalFormatCalendarMonth);
     public static final SGridCellRendererNumber CellRendererValue0D = new SGridCellRendererNumber(SLibUtils.DecimalFormatValue0D);
+    public static final SGridCellRendererNumber CellRendererValue1D = new SGridCellRendererNumber(SLibUtils.DecimalFormatValue1D);
     public static final SGridCellRendererNumber CellRendererValue2D = new SGridCellRendererNumber(SLibUtils.DecimalFormatValue2D);
+    public static final SGridCellRendererNumber CellRendererValue3D = new SGridCellRendererNumber(SLibUtils.DecimalFormatValue3D);
     public static final SGridCellRendererNumber CellRendererValue4D = new SGridCellRendererNumber(SLibUtils.DecimalFormatValue4D);
+    public static final SGridCellRendererNumber CellRendererValue6D = new SGridCellRendererNumber(SLibUtils.DecimalFormatValue6D);
     public static final SGridCellRendererNumber CellRendererValue8D = new SGridCellRendererNumber(SLibUtils.DecimalFormatValue8D);
     public static final SGridCellRendererNumber CellRendererPercentage0D = new SGridCellRendererNumber(SLibUtils.DecimalFormatPercentage0D);
+    public static final SGridCellRendererNumber CellRendererPercentage1D = new SGridCellRendererNumber(SLibUtils.DecimalFormatPercentage1D);
     public static final SGridCellRendererNumber CellRendererPercentage2D = new SGridCellRendererNumber(SLibUtils.DecimalFormatPercentage2D);
+    public static final SGridCellRendererNumber CellRendererPercentage3D = new SGridCellRendererNumber(SLibUtils.DecimalFormatPercentage3D);
     public static final SGridCellRendererNumber CellRendererPercentage4D = new SGridCellRendererNumber(SLibUtils.DecimalFormatPercentage4D);
+    public static final SGridCellRendererNumber CellRendererPercentage6D = new SGridCellRendererNumber(SLibUtils.DecimalFormatPercentage6D);
     public static final SGridCellRendererNumber CellRendererPercentage8D = new SGridCellRendererNumber(SLibUtils.DecimalFormatPercentage8D);
     public static final SGridCellRendererDefault CellRendererString = new SGridCellRendererDefault();
     public static final SGridCellRendererBoolean CellRendererBoolean = new SGridCellRendererBoolean();
@@ -126,11 +132,20 @@ public abstract class SGridUtils {
             case SGridConsts.COL_TYPE_DEC_0D:
                 width = 60;
                 break;
+            case SGridConsts.COL_TYPE_DEC_1D:
+                width = 70;
+                break;
             case SGridConsts.COL_TYPE_DEC_2D:
                 width = 80;
                 break;
+            case SGridConsts.COL_TYPE_DEC_3D:
+                width = 90;
+                break;
             case SGridConsts.COL_TYPE_DEC_4D:
                 width = 100;
+                break;
+            case SGridConsts.COL_TYPE_DEC_6D:
+                width = 110;
                 break;
             case SGridConsts.COL_TYPE_DEC_8D:
                 width = 120;
@@ -150,11 +165,20 @@ public abstract class SGridUtils {
             case SGridConsts.COL_TYPE_DEC_PER_0D:
                 width = 60;
                 break;
+            case SGridConsts.COL_TYPE_DEC_PER_1D:
+                width = 70;
+                break;
             case SGridConsts.COL_TYPE_DEC_PER_2D:
                 width = 80;
                 break;
+            case SGridConsts.COL_TYPE_DEC_PER_3D:
+                width = 90;
+                break;
             case SGridConsts.COL_TYPE_DEC_PER_4D:
                 width = 100;
+                break;
+            case SGridConsts.COL_TYPE_DEC_PER_6D:
+                width = 110;
                 break;
             case SGridConsts.COL_TYPE_DEC_PER_8D:
                 width = 120;
@@ -272,11 +296,20 @@ public abstract class SGridUtils {
             case SGridConsts.COL_TYPE_DEC_0D:
                 renderer = CellRendererValue0D;
                 break;
+            case SGridConsts.COL_TYPE_DEC_1D:
+                renderer = CellRendererValue1D;
+                break;
             case SGridConsts.COL_TYPE_DEC_2D:
                 renderer = CellRendererValue2D;
                 break;
+            case SGridConsts.COL_TYPE_DEC_3D:
+                renderer = CellRendererValue3D;
+                break;
             case SGridConsts.COL_TYPE_DEC_4D:
                 renderer = CellRendererValue4D;
+                break;
+            case SGridConsts.COL_TYPE_DEC_6D:
+                renderer = CellRendererValue6D;
                 break;
             case SGridConsts.COL_TYPE_DEC_8D:
                 renderer = CellRendererValue8D;
@@ -296,11 +329,20 @@ public abstract class SGridUtils {
             case SGridConsts.COL_TYPE_DEC_PER_0D:
                 renderer = CellRendererPercentage0D;
                 break;
+            case SGridConsts.COL_TYPE_DEC_PER_1D:
+                renderer = CellRendererPercentage1D;
+                break;
             case SGridConsts.COL_TYPE_DEC_PER_2D:
                 renderer = CellRendererPercentage2D;
                 break;
+            case SGridConsts.COL_TYPE_DEC_PER_3D:
+                renderer = CellRendererPercentage3D;
+                break;
             case SGridConsts.COL_TYPE_DEC_PER_4D:
                 renderer = CellRendererPercentage4D;
+                break;
+            case SGridConsts.COL_TYPE_DEC_PER_6D:
+                renderer = CellRendererPercentage6D;
                 break;
             case SGridConsts.COL_TYPE_DEC_PER_8D:
                 renderer = CellRendererPercentage8D;
@@ -368,16 +410,22 @@ public abstract class SGridUtils {
                 type = SLibConsts.DATA_TYPE_INT;
                 break;
             case SGridConsts.COL_TYPE_DEC_0D:
+            case SGridConsts.COL_TYPE_DEC_1D:
             case SGridConsts.COL_TYPE_DEC_2D:
+            case SGridConsts.COL_TYPE_DEC_3D:
             case SGridConsts.COL_TYPE_DEC_4D:
+            case SGridConsts.COL_TYPE_DEC_6D:
             case SGridConsts.COL_TYPE_DEC_8D:
             case SGridConsts.COL_TYPE_DEC_AMT:
             case SGridConsts.COL_TYPE_DEC_AMT_UNIT:
             case SGridConsts.COL_TYPE_DEC_EXC_RATE:
             case SGridConsts.COL_TYPE_DEC_QTY:
             case SGridConsts.COL_TYPE_DEC_PER_0D:
+            case SGridConsts.COL_TYPE_DEC_PER_1D:
             case SGridConsts.COL_TYPE_DEC_PER_2D:
+            case SGridConsts.COL_TYPE_DEC_PER_3D:
             case SGridConsts.COL_TYPE_DEC_PER_4D:
+            case SGridConsts.COL_TYPE_DEC_PER_6D:
             case SGridConsts.COL_TYPE_DEC_PER_8D:
             case SGridConsts.COL_TYPE_DEC_PER_TAX:
             case SGridConsts.COL_TYPE_DEC_PER_DISC:
@@ -444,8 +492,11 @@ public abstract class SGridUtils {
                 type = SGuiConsts.GUI_TYPE_INT;
                 break;
             case SGridConsts.COL_TYPE_DEC_0D:
+            case SGridConsts.COL_TYPE_DEC_1D:
             case SGridConsts.COL_TYPE_DEC_2D:
+            case SGridConsts.COL_TYPE_DEC_3D:
             case SGridConsts.COL_TYPE_DEC_4D:
+            case SGridConsts.COL_TYPE_DEC_6D:
             case SGridConsts.COL_TYPE_DEC_8D:
                 type = SGuiConsts.GUI_TYPE_DEC;
                 break;
@@ -462,8 +513,11 @@ public abstract class SGridUtils {
                 type = SGuiConsts.GUI_TYPE_DEC_QTY;
                 break;
             case SGridConsts.COL_TYPE_DEC_PER_0D:
+            case SGridConsts.COL_TYPE_DEC_PER_1D:
             case SGridConsts.COL_TYPE_DEC_PER_2D:
+            case SGridConsts.COL_TYPE_DEC_PER_3D:
             case SGridConsts.COL_TYPE_DEC_PER_4D:
+            case SGridConsts.COL_TYPE_DEC_PER_6D:
             case SGridConsts.COL_TYPE_DEC_PER_8D:
                 type = SGuiConsts.GUI_TYPE_DEC_PER;
                 break;
@@ -534,16 +588,22 @@ public abstract class SGridUtils {
                 typeClass = Integer.class;
                 break;
             case SGridConsts.COL_TYPE_DEC_0D:
+            case SGridConsts.COL_TYPE_DEC_1D:
             case SGridConsts.COL_TYPE_DEC_2D:
+            case SGridConsts.COL_TYPE_DEC_3D:
             case SGridConsts.COL_TYPE_DEC_4D:
+            case SGridConsts.COL_TYPE_DEC_6D:
             case SGridConsts.COL_TYPE_DEC_8D:
             case SGridConsts.COL_TYPE_DEC_AMT:
             case SGridConsts.COL_TYPE_DEC_AMT_UNIT:
             case SGridConsts.COL_TYPE_DEC_EXC_RATE:
             case SGridConsts.COL_TYPE_DEC_QTY:
             case SGridConsts.COL_TYPE_DEC_PER_0D:
+            case SGridConsts.COL_TYPE_DEC_PER_1D:
             case SGridConsts.COL_TYPE_DEC_PER_2D:
+            case SGridConsts.COL_TYPE_DEC_PER_3D:
             case SGridConsts.COL_TYPE_DEC_PER_4D:
+            case SGridConsts.COL_TYPE_DEC_PER_6D:
             case SGridConsts.COL_TYPE_DEC_PER_8D:
             case SGridConsts.COL_TYPE_DEC_PER_TAX:
             case SGridConsts.COL_TYPE_DEC_PER_DISC:
@@ -933,7 +993,7 @@ public abstract class SGridUtils {
         double a = 0;
         double b = 0;
         double value = 0;
-        Deque<Object> stack = new ArrayDeque<Object>();
+        Deque<Object> stack = new ArrayDeque<>();
         Vector<SLibRpnArgument> arguments = null;
         SLibRpnOperator operator = null;
 
