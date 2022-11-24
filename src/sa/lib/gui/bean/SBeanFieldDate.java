@@ -130,7 +130,7 @@ public class SBeanFieldDate extends JPanel implements SGuiFieldDate {
         mnGuiType = SLibConsts.UNDEFINED;
         moSimpleDateFormat = null;
         mtDefaultValue = null;
-        mtMinDate = SLibTimeUtils.createDate(SLibTimeConsts.YEAR_MIN, 01, 01);
+        mtMinDate = SLibTimeUtils.createDate(SLibTimeConsts.YEAR_MIN, 1, 1);
         mtMaxDate = SLibTimeUtils.createDate(SLibTimeConsts.YEAR_MAX, 12, 31);
         mbMandatory = true;
         moNextField = null;
