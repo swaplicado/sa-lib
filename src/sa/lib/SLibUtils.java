@@ -18,6 +18,8 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.TimeZone;
 import java.util.Vector;
@@ -57,8 +59,10 @@ public abstract class SLibUtils {
     public static final SimpleDateFormat DateFormatDate = new SimpleDateFormat("dd/MM/yyyy");
     public static final SimpleDateFormat DateFormatDateShort = new SimpleDateFormat("dd/MM/yy");
     public static final SimpleDateFormat DateFormatDateLong = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy");
+    public static final SimpleDateFormat DateFormatDateDayMonthLong = new SimpleDateFormat("dd 'de' MMMM");
     public static final SimpleDateFormat DateFormatDateYearMonth = new SimpleDateFormat("yyyy-MM");
     public static final SimpleDateFormat DateFormatDateYear = new SimpleDateFormat("yyyy");
+    public static final SimpleDateFormat DateFormatDateDay = new SimpleDateFormat("dd");
     public static final SimpleDateFormat DateFormatDatetime = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     public static final SimpleDateFormat DateFormatDatetimeTimeZone = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss Z");
     public static final SimpleDateFormat DateFormatTime = new SimpleDateFormat("HH:mm:ss");
@@ -1298,4 +1302,20 @@ public abstract class SLibUtils {
         
         return sb.toString();
     }
-}
+    
+    public static String dateFormatDatePeriodLong(Date staDate, Date endDate) {
+        Calendar start = Calendar.getInstance();
+        Calendar end = Calendar.getInstance();
+        start.setTime(staDate); 
+        end.setTime(endDate);
+        if (start.get(Calendar.YEAR) != start.get(Calendar.YEAR)) {
+            return DateFormatDateLong.format(staDate) + " al " + DateFormatDateLong.format(endDate);
+        }
+        else if (start.get(Calendar.MONTH) != start.get(Calendar.MONTH)) {
+            return DateFormatDateDayMonthLong.format(staDate) + " al " + DateFormatDateLong.format(endDate);
+        }
+        else {
+            return DateFormatDateDay.format(staDate) + " al " + DateFormatDateLong.format(endDate);
+        }
+    }
+} 

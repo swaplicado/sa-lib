@@ -575,13 +575,12 @@ public abstract class SGridPaneView extends JPanel implements SGridPane, ListSel
                 sortKeys = new ArrayList<RowSorter.SortKey>();
                 sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));    // just in case there are not sort keys
             }
-            else {
-                for (RowSorter.SortKey sortKey : sortKeys) {
-                    SXmlSortKey xmlSortKey = new SXmlSortKey();
-                    xmlSortKey.getAttribute(SXmlSortKey.ATT_COLUMN).setValue(jtTable.convertColumnIndexToView(sortKey.getColumn()));
-                    xmlSortKey.getAttribute(SXmlSortKey.ATT_SORT_ORDER).setValue(sortKey.getSortOrder().toString());
-                    gridXml.getXmlElements().add(xmlSortKey);
-                }
+            
+            for (RowSorter.SortKey sortKey : sortKeys) {
+                SXmlSortKey xmlSortKey = new SXmlSortKey();
+                xmlSortKey.getAttribute(SXmlSortKey.ATT_COLUMN).setValue(jtTable.convertColumnIndexToView(sortKey.getColumn()));
+                xmlSortKey.getAttribute(SXmlSortKey.ATT_SORT_ORDER).setValue(sortKey.getSortOrder().toString());
+                gridXml.getXmlElements().add(xmlSortKey);
             }
 
             xml = gridXml.getXmlString();
