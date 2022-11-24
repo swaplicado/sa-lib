@@ -420,4 +420,27 @@ public abstract class SLibTimeUtils {
         
         return string;
     }
+    
+    /**
+     * Formats period of dates considereing if they are from the same year or same month.
+     * @param startDate Start date of period.
+     * @param endDate End date of period.
+     * @return Formatted string.
+     */
+    public static String dateFormatDatePeriodLong(final Date startDate, final Date endDate) {
+        Calendar start = Calendar.getInstance();
+        Calendar end = Calendar.getInstance();
+        start.setTime(startDate); 
+        end.setTime(endDate);
+        
+        if (start.get(Calendar.YEAR) != start.get(Calendar.YEAR)) {
+            return SLibUtils.DateFormatDateLong.format(startDate) + " al " + SLibUtils.DateFormatDateLong.format(endDate);
+        }
+        else if (start.get(Calendar.MONTH) != start.get(Calendar.MONTH)) {
+            return SLibUtils.DateFormatDateDayMonthLong.format(startDate) + " al " + SLibUtils.DateFormatDateLong.format(endDate);
+        }
+        else {
+            return SLibUtils.DateFormatDateDay.format(startDate) + " al " + SLibUtils.DateFormatDateLong.format(endDate);
+        }
+    }
 }

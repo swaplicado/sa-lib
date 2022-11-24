@@ -18,8 +18,6 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.TimeZone;
 import java.util.Vector;
@@ -1301,21 +1299,5 @@ public abstract class SLibUtils {
         bis.close();
         
         return sb.toString();
-    }
-    
-    public static String dateFormatDatePeriodLong(Date staDate, Date endDate) {
-        Calendar start = Calendar.getInstance();
-        Calendar end = Calendar.getInstance();
-        start.setTime(staDate); 
-        end.setTime(endDate);
-        if (start.get(Calendar.YEAR) != start.get(Calendar.YEAR)) {
-            return DateFormatDateLong.format(staDate) + " al " + DateFormatDateLong.format(endDate);
-        }
-        else if (start.get(Calendar.MONTH) != start.get(Calendar.MONTH)) {
-            return DateFormatDateDayMonthLong.format(staDate) + " al " + DateFormatDateLong.format(endDate);
-        }
-        else {
-            return DateFormatDateDay.format(staDate) + " al " + DateFormatDateLong.format(endDate);
-        }
     }
 } 
