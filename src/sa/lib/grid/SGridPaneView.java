@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -33,6 +34,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableRowSorter;
+import sa.gui.util.SUtilConsts;
 import sa.lib.SLibConsts;
 import sa.lib.SLibRpnArgument;
 import sa.lib.SLibRpnArgumentType;
@@ -44,6 +46,7 @@ import sa.lib.grid.xml.SXmlGridXml;
 import sa.lib.grid.xml.SXmlRpnArgument;
 import sa.lib.grid.xml.SXmlSortKey;
 import sa.lib.gui.SGuiClient;
+import sa.lib.gui.SGuiComponentGui;
 import sa.lib.gui.SGuiConsts;
 import sa.lib.gui.SGuiParams;
 import sa.lib.gui.SGuiUserGui;
@@ -55,6 +58,11 @@ import sa.lib.xml.SXmlElement;
  * @author Sergio Flores
  */
 public abstract class SGridPaneView extends JPanel implements SGridPane, ListSelectionListener {
+
+    private ImageIcon moIconReset = new ImageIcon(getClass().getResource("/sa/lib/img/cmd_grid_reset.gif"));
+    private ImageIcon moIconResetUpd = new ImageIcon(getClass().getResource("/sa/lib/img/cmd_grid_reset_upd.gif"));
+    private ImageIcon moIconReload = new ImageIcon(getClass().getResource("/sa/lib/img/cmd_grid_reload.gif"));
+    private ImageIcon moIconReloadUpd = new ImageIcon(getClass().getResource("/sa/lib/img/cmd_grid_reload_upd.gif"));
 
     protected SGuiClient miClient;
     protected int mnGridType;
@@ -78,16 +86,38 @@ public abstract class SGridPaneView extends JPanel implements SGridPane, ListSel
     protected HashMap<Integer, Integer> moColumnComplementsMap;
 
     protected int mnListSelectionModel;
+    protected int mnRenderAttempts;
     protected int[] manUserGuiKey;
     protected SGuiUserGui miUserGui;
 
+    protected int mnPrivilegeView;
+    protected int mnUserLevelAccess;
+    protected boolean mbClearSettingsNeeded;
+    protected boolean mbReloadNeeded;
+    protected boolean mbApplyNew;
+    protected boolean mbApplyCopy;
+    protected boolean mbApplyEdit;
+    protected boolean mbApplyDisable;
+    protected boolean mbApplyDelete;
+    protected ArrayList<SGuiComponentGui> maComponentGuis;
+
     /** Creates new form SGridPaneView */
     public SGridPaneView(SGuiClient client, int viewType, int gridType, int gridSubtype, String title) {
-        this(client, viewType, gridType, gridSubtype, title, null);
+        this(client, viewType, gridType, gridSubtype, title, SLibConsts.UNDEFINED, null);
     }
 
     /** Creates new form SGridPaneView */
     public SGridPaneView(SGuiClient client, int viewType, int gridType, int gridSubtype, String title, SGuiParams params) {
+        this(client, viewType, gridType, gridSubtype, title, SLibConsts.UNDEFINED, params);
+    }
+
+    /** Creates new form SGridPaneView */
+    public SGridPaneView(SGuiClient client, int viewType, int gridType, int gridSubtype, String title, int privilegeView) {
+        this(client, viewType, gridType, gridSubtype, title, privilegeView, null);
+    }
+
+    /** Creates new form SGridPaneView */
+    public SGridPaneView(SGuiClient client, int viewType, int gridType, int gridSubtype, String title, int privilegeView, SGuiParams params) {
         miClient = client;
         mnGridType = gridType;
         mnGridSubtype = gridSubtype;
@@ -100,6 +130,10 @@ public abstract class SGridPaneView extends JPanel implements SGridPane, ListSel
         msSql = "";
         moPaneParams = params;
         moFormParams = null;
+        mnRenderAttempts = 0;
+
+        mnPrivilegeView = privilegeView;
+        mnUserLevelAccess = miClient.getSession().getUser().getPrivilegeLevel(mnPrivilegeView);
 
         initComponents();
         initComponentsCustom();
@@ -119,8 +153,8 @@ public abstract class SGridPaneView extends JPanel implements SGridPane, ListSel
         jpCommandsSys = new javax.swing.JPanel();
         jpCommandsSysLeft = new javax.swing.JPanel();
         jbRowNew = new javax.swing.JButton();
-        jbRowEdit = new javax.swing.JButton();
         jbRowCopy = new javax.swing.JButton();
+        jbRowEdit = new javax.swing.JButton();
         jbRowDisable = new javax.swing.JButton();
         jbRowDelete = new javax.swing.JButton();
         jpCommandsSysCenter = new javax.swing.JPanel();
@@ -166,16 +200,6 @@ public abstract class SGridPaneView extends JPanel implements SGridPane, ListSel
         });
         jpCommandsSysLeft.add(jbRowNew);
 
-        jbRowEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sa/lib/img/cmd_std_edit.gif"))); // NOI18N
-        jbRowEdit.setToolTipText("Modificar (Ctrl+M)");
-        jbRowEdit.setPreferredSize(new java.awt.Dimension(23, 23));
-        jbRowEdit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbRowEditActionPerformed(evt);
-            }
-        });
-        jpCommandsSysLeft.add(jbRowEdit);
-
         jbRowCopy.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sa/lib/img/cmd_std_copy.gif"))); // NOI18N
         jbRowCopy.setToolTipText("Duplicar (Ctrl+D)");
         jbRowCopy.setPreferredSize(new java.awt.Dimension(23, 23));
@@ -185,6 +209,16 @@ public abstract class SGridPaneView extends JPanel implements SGridPane, ListSel
             }
         });
         jpCommandsSysLeft.add(jbRowCopy);
+
+        jbRowEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sa/lib/img/cmd_std_edit.gif"))); // NOI18N
+        jbRowEdit.setToolTipText("Modificar (Ctrl+M)");
+        jbRowEdit.setPreferredSize(new java.awt.Dimension(23, 23));
+        jbRowEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbRowEditActionPerformed(evt);
+            }
+        });
+        jpCommandsSysLeft.add(jbRowEdit);
 
         jbRowDisable.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sa/lib/img/cmd_std_disable.gif"))); // NOI18N
         jbRowDisable.setToolTipText("Inhabilitar (Ctrl+I)");
@@ -396,10 +430,20 @@ public abstract class SGridPaneView extends JPanel implements SGridPane, ListSel
         moModel = new SGridModel();
         moSeeker = new SGridSeeker(miClient.getFrame());
         moPaneSettings = null;
-        moSuscriptionsSet = new HashSet<Integer>();
-        miSortKeysList = new ArrayList<RowSorter.SortKey>();
-        moFiltersMap = new HashMap<Integer, Object>();
-        moColumnComplementsMap = new HashMap<Integer, Integer>();
+        moSuscriptionsSet = new HashSet<>();
+        miSortKeysList = new ArrayList<>();
+        moFiltersMap = new HashMap<>();
+        moColumnComplementsMap = new HashMap<>();
+
+        mbClearSettingsNeeded = false;
+        mbReloadNeeded = false;
+
+        mbApplyNew = false;
+        mbApplyCopy = false;
+        mbApplyEdit = false;
+        mbApplyDisable = false;
+        mbApplyDelete = false;
+        maComponentGuis = new ArrayList<>();
 
         defineSuscriptions();
 
@@ -460,13 +504,71 @@ public abstract class SGridPaneView extends JPanel implements SGridPane, ListSel
         SGuiUtils.createActionMap(this, this, "actionGridSearchNextValue", "gridSearchNextValue", KeyEvent.VK_F3, 0);
     }
 
+    // This method differs from SA-Lib.
+//    protected void computeUserGuiFilters(final SXmlGridXml gridXml_n) {
+//        SXmlGridXml gridXml = gridXml_n;
+//
+//        try {
+//            if (gridXml == null) {
+//                gridXml = new SXmlGridXml(SGridConsts.GRID_PANE_VIEW);
+//                gridXml.processXml(miUserGui.getGui());
+//            }
+//
+//            for (SXmlElement element : gridXml.getXmlElements()) {
+//                if (element instanceof SXmlFilter) {
+//                    // Filters:
+//
+//                    SXmlFilter xmlFilter = (SXmlFilter) element;
+//                    SGridFilterValue filterValue = new SGridFilterValue(
+//                             (Integer) xmlFilter.getAttribute(SXmlFilter.ATT_FILTER_TYPE).getValue(),
+//                             (Integer) xmlFilter.getAttribute(SXmlFilter.ATT_DATA_TYPE).getValue(),
+//                             xmlFilter.getAttribute(SXmlFilter.ATT_VALUE).getValue());
+//
+//                    switch ((Integer) xmlFilter.getAttribute(SXmlFilter.ATT_DATA_TYPE).getValue()) {
+//                        case SGridConsts.FILTER_DATA_TYPE_DATE:
+//                        case SGridConsts.FILTER_DATA_TYPE_DATE_ARRAY:
+//                        case SGridConsts.FILTER_DATA_TYPE_GUIDATE:
+//                        case SGridConsts.FILTER_DATA_TYPE_GUIDATE_ARRAY:
+//                            break;
+//
+//                        case SGridConsts.FILTER_DATA_TYPE_INT_ARRAY:
+//                            filterValue.setValue(SLibUtils.textExplodeAsIntArray((String) xmlFilter.getAttribute(SXmlFilter.ATT_VALUE).getValue(), "-"));
+//                            moFiltersMap.put(filterValue.getFilterType(), filterValue);
+//                            break;
+//
+//                        case SGridConsts.FILTER_DATA_TYPE_BOOL:
+//                            filterValue.setValue(Boolean.parseBoolean(xmlFilter.getAttribute(SXmlFilter.ATT_VALUE).getValue().toString()));
+//                            moFiltersMap.put(filterValue.getFilterType(), filterValue);
+//
+//                            if (filterValue.getFilterType() == SGridConsts.FILTER_DELETED) {
+//                                jtbFilterDeleted.setSelected(Boolean.parseBoolean(xmlFilter.getAttribute(SXmlFilter.ATT_VALUE).getValue().toString()));
+//                            }
+//                            break;
+//
+//                        default:
+//                            miClient.showMsgBoxError(SLibConsts.ERR_MSG_OPTION_UNKNOWN);
+//                    }
+//                }
+//            }
+//        }
+//        catch (Exception e) {
+//            SLibUtils.showException(this, e);
+//        }
+//    }
+
     protected void computeUserGui() {
+        boolean found = false;
+        ArrayList<SGridColumnView> defaultGridColumns = null;
         SXmlGridXml gridXml = new SXmlGridXml(SGridConsts.GRID_PANE_VIEW);
 
         miSortKeysList.clear();
+        mbClearSettingsNeeded = false;
 
         try {
             gridXml.processXml(miUserGui.getGui());
+
+            //jtbAutoReload.setSelected((Boolean) gridXml.getAttribute(SXmlGridXml.ATT_AUTO_RELOAD).getValue());
+
             for (SXmlElement element : gridXml.getXmlElements()) {
                 if (element instanceof SXmlColumnView) {
                     // Columns:
@@ -538,6 +640,36 @@ public abstract class SGridPaneView extends JPanel implements SGridPane, ListSel
             miUserGui = null;   // reset grid's user preferences
             populateGrid(SGridConsts.REFRESH_MODE_RESET);
         }
+
+        // Check if customized columns are equivalent to default columns:
+
+//        defaultGridColumns = createGridColumns();
+//
+//        if (defaultGridColumns.size() != moModel.getGridColumns().size()) {
+//            mbClearSettingsNeeded = true;
+//        }
+//        else {
+//            for (int i = 0; i < defaultGridColumns.size(); i++) {
+//                found = false;
+//                for (int j = 0; j < moModel.getGridColumns().size(); j++) {
+//                    if (defaultGridColumns.get(i).getFieldName().compareTo(moModel.getGridColumns().get(j).getFieldName()) == 0 &&
+//                            defaultGridColumns.get(i).getColumnType() == moModel.getGridColumns().get(j).getColumnType() &&
+//                            defaultGridColumns.get(i).getColumnTitle().compareTo(moModel.getGridColumns().get(j).getColumnTitle()) == 0 &&
+//                            defaultGridColumns.get(i).isSumApplying() == ((SGridColumnView) moModel.getGridColumns().get(j)).isSumApplying()) {
+//                        found = true;
+//                        break;
+//                    }
+//                }
+//                if (!found) {
+//                    mbClearSettingsNeeded = true;
+//                    break;
+//                }
+//            }
+//        }
+
+        if (mbClearSettingsNeeded) {
+            jbGridClearSettings.setIcon(moIconResetUpd);
+        }
     }
 
     protected void preserveUserGui() {
@@ -546,6 +678,10 @@ public abstract class SGridPaneView extends JPanel implements SGridPane, ListSel
             SXmlGridXml gridXml = new SXmlGridXml(SGridConsts.GRID_PANE_VIEW);
             @SuppressWarnings("unchecked")
             List<RowSorter.SortKey> sortKeys = (List<RowSorter.SortKey>) jtTable.getRowSorter().getSortKeys();
+
+            // Grid attributes:
+
+//            gridXml.getAttribute(SXmlGridXml.ATT_AUTO_RELOAD).setValue(jtbAutoReload.isSelected());
 
             // Columns:
 
@@ -558,6 +694,7 @@ public abstract class SGridPaneView extends JPanel implements SGridPane, ListSel
                 xmlColumn.getAttribute(SXmlColumnView.ATT_COLUMN_TITLE).setValue(gridColumn.getColumnTitle());
                 xmlColumn.getAttribute(SXmlColumnView.ATT_COLUMN_WIDTH).setValue(jtTable.getColumnModel().getColumn(i).getWidth());
                 xmlColumn.getAttribute(SXmlColumnView.ATT_IS_SUM_APPLYING).setValue(gridColumn.isSumApplying());
+//                xmlColumn.getAttribute(SXmlColumnView.ATT_CELL_RENDERER).setValue(SLibConsts.UNDEFINED);
 
                 for (SLibRpnArgument argument : gridColumn.getRpnArguments()) {
                     SXmlRpnArgument xmlArgument = new SXmlRpnArgument();
@@ -572,7 +709,7 @@ public abstract class SGridPaneView extends JPanel implements SGridPane, ListSel
             // Sort keys:
 
             if (sortKeys.isEmpty()) {
-                sortKeys = new ArrayList<RowSorter.SortKey>();
+                sortKeys = new ArrayList<>();
                 sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));    // just in case there are not sort keys
             }
             
@@ -582,6 +719,43 @@ public abstract class SGridPaneView extends JPanel implements SGridPane, ListSel
                 xmlSortKey.getAttribute(SXmlSortKey.ATT_SORT_ORDER).setValue(sortKey.getSortOrder().toString());
                 gridXml.getXmlElements().add(xmlSortKey);
             }
+
+            /* Filter user preferences temporarily disabled (Sergio Flores, 2013-12-05):
+            // Filters:
+
+            if (!moFiltersMap.isEmpty()) {
+                 SGridFilterValue filterValue = null;
+
+                for (int i = 0; i < moFiltersMap.size(); i++) {
+                    filterValue = (SGridFilterValue) moFiltersMap.values().toArray()[i];
+
+                    if (filterValue.getValue() != null) {
+                        SXmlFilter xmlFilter = new SXmlFilter();
+                        xmlFilter.getAttribute(SXmlFilter.ATT_FILTER_TYPE).setValue(filterValue.getFilterType());
+
+                        switch (filterValue.getDataType()) {
+                            case SGridConsts.FILTER_DATA_TYPE_DATE:
+                            case SGridConsts.FILTER_DATA_TYPE_DATE_ARRAY:
+                            case SGridConsts.FILTER_DATA_TYPE_GUIDATE:
+                            case SGridConsts.FILTER_DATA_TYPE_GUIDATE_ARRAY:
+                                break;
+                            case SGridConsts.FILTER_DATA_TYPE_INT_ARRAY:
+                                xmlFilter.getAttribute(SXmlFilter.ATT_DATA_TYPE).setValue(SGridConsts.FILTER_DATA_TYPE_INT_ARRAY);
+                                xmlFilter.getAttribute(SXmlFilter.ATT_VALUE).setValue(SLibUtils.textKey((int[]) filterValue.getValue()));
+                                gridXml.getXmlElements().add(xmlFilter);
+                                break;
+                            case SGridConsts.FILTER_DATA_TYPE_BOOL:
+                                xmlFilter.getAttribute(SXmlFilter.ATT_DATA_TYPE).setValue(SGridConsts.FILTER_DATA_TYPE_BOOL);
+                                xmlFilter.getAttribute(SXmlFilter.ATT_VALUE).setValue(filterValue.getValue());
+                                gridXml.getXmlElements().add(xmlFilter);
+                                break;
+                            default:
+                                miClient.showMsgBoxError(SLibConsts.ERR_MSG_OPTION_UNKNOWN);
+                        }
+                    }
+                }
+            }
+            */
 
             xml = gridXml.getXmlString();
             miUserGui = miClient.saveUserGui(manUserGuiKey, xml);
@@ -804,7 +978,7 @@ public abstract class SGridPaneView extends JPanel implements SGridPane, ListSel
                     gridColumnView = (SGridColumnView) moModel.getGridColumns().get(col);
 
                     if (colsWithRpn[col]) {
-                        gridRowView.getValues().add(new Double(0));
+                        gridRowView.getValues().add((double) 0);
                     }
                     else {
                         colClass = SGridUtils.getDataTypeClass(gridColumnView.getColumnType());
@@ -942,6 +1116,8 @@ public abstract class SGridPaneView extends JPanel implements SGridPane, ListSel
 
                 moModel.getGridRows().add(gridRowView);
             }
+            
+            mnRenderAttempts = 0; // clear count, data already read
         }
         catch (SQLException e) {
             SLibUtils.showException(this, e);
@@ -976,6 +1152,20 @@ public abstract class SGridPaneView extends JPanel implements SGridPane, ListSel
         return point;
     }
 
+    protected void applyUserPrivileges() {
+        if (mnPrivilegeView != SLibConsts.UNDEFINED) {
+            for (SGuiComponentGui c : maComponentGuis) {
+                c.getComponentGui().setEnabled(mnUserLevelAccess >= c.getUserPrivilegesMap().get(mnPrivilegeView));
+            }
+        }
+
+        jbRowNew.setEnabled(mbApplyNew && (mnPrivilegeView == SLibConsts.UNDEFINED || miClient.getSession().getUser().getPrivilegeLevel(mnPrivilegeView) >= SUtilConsts.LEV_CAPTURE));
+        jbRowCopy.setEnabled(mbApplyCopy && (mnPrivilegeView == SLibConsts.UNDEFINED || miClient.getSession().getUser().getPrivilegeLevel(mnPrivilegeView) >= SUtilConsts.LEV_CAPTURE));
+        jbRowEdit.setEnabled(mbApplyEdit && (mnPrivilegeView == SLibConsts.UNDEFINED || miClient.getSession().getUser().getPrivilegeLevel(mnPrivilegeView) >= SUtilConsts.LEV_AUTHOR));
+        jbRowDisable.setEnabled(mbApplyDisable && (mnPrivilegeView == SLibConsts.UNDEFINED || miClient.getSession().getUser().getPrivilegeLevel(mnPrivilegeView) >= SUtilConsts.LEV_MANAGER));
+        jbRowDelete.setEnabled(mbApplyDelete && (mnPrivilegeView == SLibConsts.UNDEFINED || miClient.getSession().getUser().getPrivilegeLevel(mnPrivilegeView) >= SUtilConsts.LEV_MANAGER));
+    }
+
     public void actionMouseClicked() {
         actionRowEdit();
     }
@@ -984,6 +1174,26 @@ public abstract class SGridPaneView extends JPanel implements SGridPane, ListSel
         if (jbRowNew.isEnabled()) {
             miClient.getSession().getModule(mnModuleType, mnModuleSubtype).showForm(mnGridType, mnGridSubtype, moFormParams);
             moFormParams = null;
+        }
+    }
+
+    public void actionRowCopy() {
+        if (jbRowCopy.isEnabled()) {
+            if (jtTable.getSelectedRowCount() != 1) {
+                miClient.showMsgBoxInformation(SGridConsts.MSG_SELECT_ROW);
+            }
+            else {
+                SGridRowView gridRow = (SGridRowView) getSelectedGridRow();
+                SGuiParams params = null;
+
+                if (gridRow.getRowType() != SGridConsts.ROW_TYPE_DATA) {
+                    miClient.showMsgBoxWarning(SGridConsts.ERR_MSG_ROW_TYPE_DATA);
+                }
+                else {
+                    params = new SGuiParams(getSelectedGridRow().getRowPrimaryKey(), true);
+                    miClient.getSession().getModule(mnModuleType, mnModuleSubtype).showForm(mnGridType, mnGridSubtype, params);
+                }
+            }
         }
     }
 
@@ -1009,32 +1219,15 @@ public abstract class SGridPaneView extends JPanel implements SGridPane, ListSel
                 else if (!gridRow.isUpdatable()) {
                     miClient.showMsgBoxWarning(SDbConsts.MSG_REG_ + gridRow.getRowName() + SDbConsts.MSG_REG_NON_UPDATABLE);
                 }
+//                else if (moPaneSettings.isUserInsertApplying() && mnUserLevelAccess == SUtilConsts.LEV_AUTHOR && gridRow.getFkUserInsertId() != miClient.getSession().getUser().getPkUserId()) {
+//                    miClient.showMsgBoxWarning(SDbConsts.MSG_REG_DENIED_RIGHT);
+//                }
                 else {
                     params = moFormParams != null ? moFormParams : new SGuiParams();
                     params.setKey(gridRow.getRowPrimaryKey());
 
                     miClient.getSession().getModule(mnModuleType, mnModuleSubtype).showForm(mnGridType, mnGridSubtype, params);
                     moFormParams = null;
-                }
-            }
-        }
-    }
-
-    public void actionRowCopy() {
-        if (jbRowCopy.isEnabled()) {
-            if (jtTable.getSelectedRowCount() != 1) {
-                miClient.showMsgBoxInformation(SGridConsts.MSG_SELECT_ROW);
-            }
-            else {
-                SGridRowView gridRow = (SGridRowView) getSelectedGridRow();
-                SGuiParams params = null;
-
-                if (gridRow.getRowType() != SGridConsts.ROW_TYPE_DATA) {
-                    miClient.showMsgBoxWarning(SGridConsts.ERR_MSG_ROW_TYPE_DATA);
-                }
-                else {
-                    params = new SGuiParams(getSelectedGridRow().getRowPrimaryKey(), true);
-                    miClient.getSession().getModule(mnModuleType, mnModuleSubtype).showForm(mnGridType, mnGridSubtype, params);
                 }
             }
         }
@@ -1117,6 +1310,11 @@ public abstract class SGridPaneView extends JPanel implements SGridPane, ListSel
             if (miClient.showMsgBoxConfirm(SGridConsts.MSG_CONFIRM_RESET_SETTINGS) == JOptionPane.YES_OPTION) {
                 miUserGui = null;
                 populateGrid(SGridConsts.REFRESH_MODE_RESET);
+
+                if (mbClearSettingsNeeded) {
+                    mbClearSettingsNeeded = false;
+                    jbGridClearSettings.setIcon(moIconReset);
+                }
             }
         }
     }
@@ -1215,12 +1413,44 @@ public abstract class SGridPaneView extends JPanel implements SGridPane, ListSel
      */
 
     public void setFormParams(SGuiParams params) { moFormParams = params; }
+    public void setApplyNew(boolean b) { mbApplyNew = b; }
+    public void setApplyCopy(boolean b) { mbApplyCopy = b; }
+    public void setApplyEdit(boolean b) { mbApplyEdit = b; }
+    public void setApplyDisable(boolean b) { mbApplyDisable = b; }
+    public void setApplyDelete(boolean b) { mbApplyDelete = b; }
 
     public int getGridViewType() { return mnGridViewType; }
     public String getTitle() { return msTitle; }
     public String getSql() { return msSql; }
     public HashMap<Integer, Integer> getColumnComplementsMap() { return moColumnComplementsMap; }
     public HashMap<Integer, Object> getFiltersMap() { return moFiltersMap; }
+
+    public int getPrivilegeView() { return mnPrivilegeView; }
+    public int getUserLevelAccess() { return mnUserLevelAccess; }
+    public boolean getApplyNew() { return  mbApplyNew; }
+    public boolean getApplyCopy() { return  mbApplyCopy; }
+    public boolean getApplyEdit() { return  mbApplyEdit; }
+    public boolean getApplyDisable() { return  mbApplyDisable; }
+    public boolean getApplyDelete() { return  mbApplyDelete; }
+    public ArrayList<SGuiComponentGui> getComponentGuis() { return maComponentGuis; }
+
+    public Object getFilterValue(int typeFilter) {
+        Object obj = null;
+
+        if (!moFiltersMap.isEmpty()) {
+            obj = moFiltersMap.get(typeFilter);
+        }
+
+        if (obj != null) {
+            obj = moFiltersMap.get(typeFilter);
+        }
+
+        return obj;
+    }
+
+    public boolean hasUserPrivilegeView() {
+        return mnPrivilegeView == SLibConsts.UNDEFINED || miClient.getSession().getUser().hasPrivilege(mnPrivilegeView);
+    }
 
     public void populateGrid(final int refreshMode) {
         int index = -1;
@@ -1233,6 +1463,11 @@ public abstract class SGridPaneView extends JPanel implements SGridPane, ListSel
             posHor = jspScrollPane.getHorizontalScrollBar().getValue();
         }
 
+        if (mnRenderAttempts++ > 1) {
+            miClient.showMsgBoxWarning("Se alcanzó el número máximo de intentos para mostrar esta vista.");
+            return;
+        }
+        
         readGridData();
 
         if (refreshMode == SGridConsts.REFRESH_MODE_RELOAD) {
@@ -1250,12 +1485,21 @@ public abstract class SGridPaneView extends JPanel implements SGridPane, ListSel
                 setSelectedGridRow(index);
             }
         }
+
+        if (mbReloadNeeded) {
+            mbReloadNeeded = false;
+            jbGridReload.setIcon(moIconReload);
+        }
     }
 
     public void triggerSuscription(final int suscription) {
-        if (jtbAutoReload.isSelected()) {
-            if (moSuscriptionsSet.contains(suscription)) {
+        if (moSuscriptionsSet.contains(suscription)) {
+            if (jtbAutoReload.isSelected()) {
                 refreshGridWithReload();
+            }
+            else {
+                mbReloadNeeded = true;
+                jbGridReload.setIcon(moIconReloadUpd);
             }
         }
     }
@@ -1269,11 +1513,13 @@ public abstract class SGridPaneView extends JPanel implements SGridPane, ListSel
     }
 
     public void setRowButtonsEnabled(boolean newEnabled, boolean editEnabled, boolean copyEnabled, boolean disableEnabled, boolean deleteEnabled) {
-        jbRowNew.setEnabled(newEnabled);
-        jbRowEdit.setEnabled(editEnabled);
-        jbRowCopy.setEnabled(copyEnabled);
-        jbRowDisable.setEnabled(disableEnabled);
-        jbRowDelete.setEnabled(deleteEnabled);
+        mbApplyNew = newEnabled;
+        mbApplyCopy = copyEnabled;
+        mbApplyEdit = editEnabled;
+        mbApplyDisable = disableEnabled;
+        mbApplyDelete = deleteEnabled;
+
+        applyUserPrivileges();
     }
 
     public void setSelectedGridRowInterval(final int row0, final int row1) {
