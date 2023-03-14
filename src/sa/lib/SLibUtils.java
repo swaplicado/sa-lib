@@ -28,7 +28,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Sergio Flores
+ * @author Sergio Flores, Isabel Servín
  */
 public abstract class SLibUtils {
 
@@ -57,8 +57,12 @@ public abstract class SLibUtils {
     public static final SimpleDateFormat DateFormatDate = new SimpleDateFormat("dd/MM/yyyy");
     public static final SimpleDateFormat DateFormatDateShort = new SimpleDateFormat("dd/MM/yy");
     public static final SimpleDateFormat DateFormatDateLong = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy");
+    public static final SimpleDateFormat DateFormatDateShortMonthYear = new SimpleDateFormat("dd MMM yyyy");
+    public static final SimpleDateFormat DateFormatDateShortMonth = new SimpleDateFormat("dd MMM yy");
     public static final SimpleDateFormat DateFormatDateDayMonthLong = new SimpleDateFormat("dd 'de' MMMM");
+    public static final SimpleDateFormat DateFormatDateMonthYearLong = new SimpleDateFormat("MMMM yy");
     public static final SimpleDateFormat DateFormatDateYearMonth = new SimpleDateFormat("yyyy-MM");
+    public static final SimpleDateFormat DateFormatDateDayMonth = new SimpleDateFormat("dd MMM");
     public static final SimpleDateFormat DateFormatDateYear = new SimpleDateFormat("yyyy");
     public static final SimpleDateFormat DateFormatDateDay = new SimpleDateFormat("dd");
     public static final SimpleDateFormat DateFormatDatetime = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");

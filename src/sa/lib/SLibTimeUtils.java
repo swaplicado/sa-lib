@@ -16,7 +16,7 @@ import org.joda.time.Period;
 
 /**
  *
- * @author Sergio Flores
+ * @author Sergio Flores, Isabel Servín
  */
 public abstract class SLibTimeUtils {
 
@@ -451,6 +451,29 @@ public abstract class SLibTimeUtils {
         }
         else {
             return SLibUtils.DateFormatDateDay.format(startDate) + " al " + SLibUtils.DateFormatDateLong.format(endDate);
+        }
+    }
+    
+    /**
+     * Formats period of dates considereing if they are from the same year or same month.
+     * @param startDate Start date of period.
+     * @param endDate End date of period.
+     * @return Formatted string.
+     */
+    public static String dateFormatDatePeriodShort(final Date startDate, final Date endDate) {
+        Calendar start = Calendar.getInstance();
+        Calendar end = Calendar.getInstance();
+        start.setTime(startDate); 
+        end.setTime(endDate);
+        
+        if (start.get(Calendar.YEAR) != start.get(Calendar.YEAR)) {
+            return SLibUtils.DateFormatDateShortMonth.format(startDate) + " al " + SLibUtils.DateFormatDateShortMonth.format(endDate);
+        }
+        else if (start.get(Calendar.MONTH) != start.get(Calendar.MONTH)) {
+            return SLibUtils.DateFormatDateDayMonth.format(startDate) + " al " + SLibUtils.DateFormatDateShortMonth.format(endDate);
+        }
+        else {
+            return SLibUtils.DateFormatDateDay.format(startDate) + " al " + SLibUtils.DateFormatDateShortMonth.format(endDate);
         }
     }
 }
