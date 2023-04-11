@@ -227,12 +227,13 @@ public abstract class SLibUtils {
     public static TimeZone createTimeZone(TimeZone zoneDefault, TimeZone zoneNew) {
         TimeZone zone = null;
 
-        if (zoneDefault.getRawOffset() == zoneNew.getRawOffset()) {
+        if (zoneDefault.getRawOffset() == zoneNew.getRawOffset() && 
+                zoneDefault.useDaylightTime() == zoneNew.useDaylightTime() &&
+                zoneDefault.getDSTSavings() == zoneNew.getDSTSavings()) {
             zone = zoneDefault;
         }
         else {
             zone = zoneNew;
-            zone.setRawOffset(zoneNew.getRawOffset() + zoneDefault.getDSTSavings());
         }
 
         return zone;
