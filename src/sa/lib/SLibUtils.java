@@ -201,6 +201,15 @@ public abstract class SLibUtils {
     public static void restoreDateFormats(final TimeZone zone) {
         DateFormatDate.setTimeZone(zone);
         DateFormatDateShort.setTimeZone(zone);
+        DateFormatDateLong.setTimeZone(zone);
+        DateFormatDateShortMonthYear.setTimeZone(zone);
+        DateFormatDateShortMonth.setTimeZone(zone);
+        DateFormatDateDayMonthLong.setTimeZone(zone);
+        DateFormatDateMonthYearLong.setTimeZone(zone);
+        DateFormatDateYearMonth.setTimeZone(zone);
+        DateFormatDateDayMonth.setTimeZone(zone); 
+        DateFormatDateYear.setTimeZone(zone); 
+        DateFormatDateDay.setTimeZone(zone); 
         DateFormatDatetime.setTimeZone(zone);
         DateFormatDatetimeTimeZone.setTimeZone(zone);
         DateFormatTime.setTimeZone(zone);
@@ -211,6 +220,8 @@ public abstract class SLibUtils {
         CsvFormatDatetime.setTimeZone(zone);
         CsvFormatTime.setTimeZone(zone);
         FileDateFormatDatetime.setTimeZone(zone);
+        IsoFormatDate.setTimeZone(zone);
+        IsoFormatDatetime.setTimeZone(zone);
     }
 
     public static TimeZone createTimeZone(TimeZone zoneDefault, TimeZone zoneNew) {
