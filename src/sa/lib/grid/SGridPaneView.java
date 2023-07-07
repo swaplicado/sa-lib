@@ -11,6 +11,7 @@
 
 package sa.lib.grid;
 
+import java.awt.Cursor;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -871,6 +872,8 @@ public abstract class SGridPaneView extends JPanel implements SGridPane, ListSel
         SGridRowView gridRowView = null;
 
         try {
+            miClient.getFrame().getContentPane().setCursor(new Cursor(Cursor.WAIT_CURSOR));
+
             createGridView();
             prepareSqlQuery();
 
@@ -1127,6 +1130,8 @@ public abstract class SGridPaneView extends JPanel implements SGridPane, ListSel
             SLibUtils.showException(this, e);
         }
         finally {
+            miClient.getFrame().getContentPane().setCursor(Cursor.getDefaultCursor());
+            
             try {
                 jtTable.getRowSorter().setSortKeys(miSortKeysList);
             }
