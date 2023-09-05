@@ -667,6 +667,10 @@ public abstract class SLibUtils {
         return new String(charArray);
     }
 
+    public static String textFirstUpperCase(final String text) {
+        return text.isEmpty() ? "" : textLeft(text, 1).toUpperCase() + text.substring(1).toLowerCase();
+    }
+
     public static String[] textExplode(final String text, final String separator) {
         int pos = 0;
         int index = 0;
