@@ -119,6 +119,7 @@ public abstract class SLibUtils {
         HtmlEntityNamesMap.put('³', "&sup3;");
         HtmlEntityNamesMap.put('´', "&acute;");
         HtmlEntityNamesMap.put('µ', "&micro;");
+        HtmlEntityNamesMap.put(' ', "&nbsp;");
         HtmlEntityNamesMap.put('¶', "&para;");
         HtmlEntityNamesMap.put('·', "&middot;");
         HtmlEntityNamesMap.put('¸', "&cedil;");
@@ -635,6 +636,18 @@ public abstract class SLibUtils {
         String html = "";
 
         for (Character c : textAux.toCharArray()) {
+            entity = HtmlEntityNamesMap.get(c);
+            html += entity == null ? c : entity;
+        }
+
+        return html;
+    }
+    
+    public static String textToHtmlIgnoreWhiteSpace(final String text) {
+        String entity = "";
+        String html = "";
+
+        for (Character c : text.toCharArray()) {
             entity = HtmlEntityNamesMap.get(c);
             html += entity == null ? c : entity;
         }
