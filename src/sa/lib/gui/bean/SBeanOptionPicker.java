@@ -112,8 +112,8 @@ public class SBeanOptionPicker extends JDialog implements SGuiOptionPicker {
 
         getContentPane().add(jpCommand, java.awt.BorderLayout.PAGE_END);
 
-        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-576)/2, (screenSize.height-388)/2, 576, 388);
+        setSize(new java.awt.Dimension(576, 388));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbOkActionPerformed
@@ -159,7 +159,7 @@ public class SBeanOptionPicker extends JDialog implements SGuiOptionPicker {
     protected javax.swing.JButton jbCancel;
     protected javax.swing.JButton jbOk;
     private javax.swing.JPanel jpCommand;
-    private javax.swing.JPanel jpGrid;
+    protected javax.swing.JPanel jpGrid;
     // End of variables declaration//GEN-END:variables
 
     /*
