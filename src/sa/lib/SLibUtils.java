@@ -119,7 +119,6 @@ public abstract class SLibUtils {
         HtmlEntityNamesMap.put('³', "&sup3;");
         HtmlEntityNamesMap.put('´', "&acute;");
         HtmlEntityNamesMap.put('µ', "&micro;");
-        HtmlEntityNamesMap.put(' ', "&nbsp;");
         HtmlEntityNamesMap.put('¶', "&para;");
         HtmlEntityNamesMap.put('·', "&middot;");
         HtmlEntityNamesMap.put('¸', "&cedil;");
