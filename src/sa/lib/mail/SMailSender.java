@@ -22,6 +22,7 @@ public class SMailSender {
     protected String msMailUser;
     protected String msMailPassword;
     protected String msMailFrom;
+    protected String msMailReplyTo;
     protected Session moSession;
 
     public SMailSender(String host, String port, String protocol, String mailUser, String mailPassword, String mailFrom) {
@@ -46,6 +47,7 @@ public class SMailSender {
     public void setMailUser(String s) { msMailUser = s; }
     public void setMailPassword(String s) { msMailPassword = s; }
     public void setMailFrom(String s) { msMailFrom = s; }
+    public void setMailReplyTo(String s) { msMailReplyTo = s; }
 
     public String getHost() { return msHost; }
     public String getPort() { return msPort; }
@@ -53,6 +55,7 @@ public class SMailSender {
     public String getMailUser() { return msMailUser; }
     public String getMailPassword() { return msMailPassword; }
     public String getMailFrom() { return msMailFrom; }
+    public String getMailReplyTo() { return msMailReplyTo; }
     public Session getSession() { return moSession; }
 
     public Session createSession() {

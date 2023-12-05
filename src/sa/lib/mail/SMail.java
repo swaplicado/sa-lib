@@ -7,11 +7,14 @@ package sa.lib.mail;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
 import javax.mail.BodyPart;
@@ -22,6 +25,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.mail.internet.MimeUtility;
 
 /**
  *
@@ -189,6 +193,18 @@ public class SMail {
 
         for (int i = 0; i < maBccRecipients.size(); i++) {
             mimeMessage.addRecipient(Message.RecipientType.BCC, new InternetAddress((String) maBccRecipients.get(i)));
+        }
+        
+        if (moSender.getMailReplyTo() != null && ! moSender.getMailReplyTo().isEmpty()) {
+            mimeMessage.setReplyTo(InternetAddress.parse(moSender.getMailReplyTo(), false));
+            try {
+                mimeMessage.setFrom(new InternetAddress(MimeUtility.encodeText(moSender.getMailReplyTo() + "<" + moSender.getMailReplyTo() + ">")));
+                mimeMessage.setSender(new InternetAddress(moSender.getMailReplyTo()));
+            }
+            catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(SMail.class.getName()).log(Level.SEVERE, null, ex);
+                mimeMessage.setFrom(new InternetAddress(moSender.getMailFrom()));
+            }
         }
 
         // Sending:
