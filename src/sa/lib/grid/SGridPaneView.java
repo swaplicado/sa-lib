@@ -361,7 +361,7 @@ public abstract class SGridPaneView extends JPanel implements SGridPane, ListSel
         jpStatusCenter.add(jbGridSearchNext);
 
         jbGridSearchNextCol.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sa/lib/img/cmd_grid_next.gif"))); // NOI18N
-        jbGridSearchNextCol.setToolTipText("Siguiente renglón");
+        jbGridSearchNextCol.setToolTipText("Siguiente columna");
         jbGridSearchNextCol.setPreferredSize(new java.awt.Dimension(23, 23));
         jbGridSearchNextCol.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
