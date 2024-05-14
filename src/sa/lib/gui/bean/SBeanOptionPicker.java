@@ -158,7 +158,7 @@ public class SBeanOptionPicker extends JDialog implements SGuiOptionPicker {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     protected javax.swing.JButton jbCancel;
     protected javax.swing.JButton jbOk;
-    private javax.swing.JPanel jpCommand;
+    protected javax.swing.JPanel jpCommand;
     protected javax.swing.JPanel jpGrid;
     // End of variables declaration//GEN-END:variables
 
