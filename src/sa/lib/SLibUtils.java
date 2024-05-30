@@ -609,9 +609,12 @@ public abstract class SLibUtils {
         ascii = ascii.replaceAll("Ô", "O");
         ascii = ascii.replaceAll("Û", "U");
         ascii = ascii.replaceAll("ý", "y");
+        ascii = ascii.replaceAll("ÿ", "y");
         ascii = ascii.replaceAll("Ý", "Y");
         ascii = ascii.replaceAll("ñ", "n");
         ascii = ascii.replaceAll("Ñ", "N");
+        ascii = ascii.replaceAll("ç", "c");
+        ascii = ascii.replaceAll("Ç", "C");
 
         return ascii;
     }
