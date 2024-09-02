@@ -12,6 +12,8 @@ package sa.lib.db;
 public abstract class SDbConsts {
 
     public static final int DBMS_MYSQL = 1;
+    public static final int DBMS_SQL_SERVER = 2;
+    public static final int DBMS_SYBASE = 3;
     public static final int DBMS_SQL_SERVER_2000 = 11;
     public static final int DBMS_SQL_SERVER_2005 = 12;
 
