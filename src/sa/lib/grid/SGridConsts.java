@@ -30,6 +30,7 @@ public abstract class SGridConsts {
     public static final int COL_TYPE_INT_CAL_MONTH = 121;
     public static final int COL_TYPE_INT_CAL_YEAR = 122;
     public static final int COL_TYPE_INT_ICON = 131;
+    public static final int COL_TYPE_INT_ICON_CIRC = 132;
     public static final int COL_TYPE_DEC_0D = 200;
     public static final int COL_TYPE_DEC_1D = 201;
     public static final int COL_TYPE_DEC_2D = 202;

@@ -34,6 +34,7 @@ import sa.lib.grid.cell.SGridCellRendererBoolean;
 import sa.lib.grid.cell.SGridCellRendererDate;
 import sa.lib.grid.cell.SGridCellRendererDefault;
 import sa.lib.grid.cell.SGridCellRendererIcon;
+import sa.lib.grid.cell.SGridCellRendererIconCircle;
 import sa.lib.grid.cell.SGridCellRendererNumber;
 import sa.lib.gui.SGuiConsts;
 import sa.lib.gui.SGuiDate;
@@ -68,6 +69,7 @@ public abstract class SGridUtils {
     public static final SGridCellRendererDate CellRendererDatetime = new SGridCellRendererDate(SLibUtils.DateFormatDatetime);
     public static final SGridCellRendererDate CellRendererTime = new SGridCellRendererDate(SLibUtils.DateFormatTime);
     public static final SGridCellRendererIcon CellRendererIcon = new SGridCellRendererIcon();
+    public static final SGridCellRendererIconCircle CellRendererIconCircle = new SGridCellRendererIconCircle();
 
     public static SGridCellRendererNumber getCellRendererNumber() {
         return CellRendererValue8D;
@@ -127,6 +129,7 @@ public abstract class SGridUtils {
                 width = 40;
                 break;
             case SGridConsts.COL_TYPE_INT_ICON:
+            case SGridConsts.COL_TYPE_INT_ICON_CIRC:
                 width = 16;
                 break;
             case SGridConsts.COL_TYPE_DEC_0D:
@@ -293,6 +296,9 @@ public abstract class SGridUtils {
             case SGridConsts.COL_TYPE_INT_ICON:
                 renderer = CellRendererIcon;
                 break;
+            case SGridConsts.COL_TYPE_INT_ICON_CIRC:
+                renderer = CellRendererIconCircle;
+                break;
             case SGridConsts.COL_TYPE_DEC_0D:
                 renderer = CellRendererValue0D;
                 break;
@@ -407,6 +413,7 @@ public abstract class SGridUtils {
             case SGridConsts.COL_TYPE_INT_CAL_MONTH:
             case SGridConsts.COL_TYPE_INT_CAL_YEAR:
             case SGridConsts.COL_TYPE_INT_ICON:
+            case SGridConsts.COL_TYPE_INT_ICON_CIRC:
                 type = SLibConsts.DATA_TYPE_INT;
                 break;
             case SGridConsts.COL_TYPE_DEC_0D:
@@ -489,6 +496,7 @@ public abstract class SGridUtils {
                 type = SGuiConsts.GUI_TYPE_INT_CAL_YEAR;
                 break;
             case SGridConsts.COL_TYPE_INT_ICON:
+            case SGridConsts.COL_TYPE_INT_ICON_CIRC:
                 type = SGuiConsts.GUI_TYPE_INT;
                 break;
             case SGridConsts.COL_TYPE_DEC_0D:
@@ -585,6 +593,7 @@ public abstract class SGridUtils {
             case SGridConsts.COL_TYPE_INT_CAL_MONTH:
             case SGridConsts.COL_TYPE_INT_CAL_YEAR:
             case SGridConsts.COL_TYPE_INT_ICON:
+            case SGridConsts.COL_TYPE_INT_ICON_CIRC:
                 typeClass = Integer.class;
                 break;
             case SGridConsts.COL_TYPE_DEC_0D:
