@@ -200,7 +200,10 @@ public abstract class SBeanForm extends JDialog implements SGuiForm {
 
     protected void windowActivated() {
         if (!mbCanShowForm) {
-            miClient.showMsgBoxWarning(msCanShowFormMessage);
+            if (!msCanShowFormMessage.isEmpty()) {
+                miClient.showMsgBoxWarning(msCanShowFormMessage);
+                System.err.println("La validación preeliminar determinó que no es posible abrir la forma y no hay mensaje que aclare la causa");
+            }
             msCanShowFormMessage = "";
             mbCanShowForm = true;
             actionCancel();
