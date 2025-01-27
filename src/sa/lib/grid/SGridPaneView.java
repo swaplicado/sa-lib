@@ -1094,6 +1094,8 @@ public abstract class SGridPaneView extends JPanel implements SGridPane, ListSel
                 SGridUtils.computeRpn(moModel);
             }
 
+            computeGridData(); // further data prcessing, when needdd
+
             if (sumApplying && dataAvailable) {
                 gridRowView = new SGridRowView(null, "", "");
                 gridRowView.setRowType(SGridConsts.ROW_TYPE_SUM);
@@ -1479,6 +1481,13 @@ public abstract class SGridPaneView extends JPanel implements SGridPane, ListSel
 
     public boolean hasUserPrivilegeView() {
         return mnPrivilegeView == SLibConsts.UNDEFINED || miClient.getSession().getUser().hasPrivilege(mnPrivilegeView);
+    }
+
+    /**
+     * Override this method to compute grid data before it is rendered.
+     */
+    public void computeGridData() {
+        
     }
 
     public void populateGrid(final int refreshMode) {
