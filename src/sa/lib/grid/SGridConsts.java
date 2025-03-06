@@ -87,6 +87,7 @@ public abstract class SGridConsts {
     public static final int FILTER_DATE_RANGE = 5;
     public static final int FILTER_YEAR = 6;
     public static final int FILTER_YEAR_MONTH = 7;
+    public static final int FILTER_CUSTOM = 20;
 
     public static final int FILTER_DATA_TYPE_INT = 1;
     public static final int FILTER_DATA_TYPE_INT_ARRAY = 2;
@@ -100,6 +101,7 @@ public abstract class SGridConsts {
     public static final int FILTER_DATA_TYPE_DATE_ARRAY = 10;
     public static final int FILTER_DATA_TYPE_GUIDATE = 11;
     public static final int FILTER_DATA_TYPE_GUIDATE_ARRAY = 12;
+    public static final int FILTER_DATA_TYPE_OBJ = 21;
 
     public static final int DATE_TYPE_EVT = 1;
     public static final int DATE_TYPE_DOC = 2;
