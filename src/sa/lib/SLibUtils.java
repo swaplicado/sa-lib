@@ -527,6 +527,16 @@ public abstract class SLibUtils {
         return textKey;
     }
 
+    public static String textKey(final Object[] key)  {
+        String textKey = "";
+
+        for (Object id : key) {
+            textKey += (textKey.length() == 0 ? "" : "-") + id;
+        }
+
+        return textKey;
+    }
+
     public static String textRepeat(final String text, final int times) {
         String repeatedText = "";
 
