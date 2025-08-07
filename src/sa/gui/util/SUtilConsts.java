@@ -15,6 +15,7 @@ public abstract class SUtilConsts {
 
     public static final int BPR_CO_ID = 1;
     public static final int BPR_BRA_ID = 1;
+    public static final int BRA_CON_ID = 1;
     public static final int BRA_ADD_ID = 1;
     public static final int BRA_BNK_ID = 1;
     public static final int BRA_CSH_ID = 1;
