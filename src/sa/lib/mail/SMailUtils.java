@@ -29,6 +29,31 @@ public abstract class SMailUtils {
     }
     
     /**
+     * Sanitizes emails removing all white spaces and replacing commas with semicolons.
+     * @param emails
+     * @return 
+     */
+    public static String sanitizeEmails(String emails) {
+        return emails.replaceAll("\\s+", "").replace(',', ';');
+    }
+    
+    /**
+     * Validates emails.
+     * @param emails
+     * @return Primitive <code>boolean[]</code> within each index value represents the validation of each found email.
+     */
+    public static boolean[] validateEmails(String emails) {
+        String[] saniticedEmails = sanitizeEmails(emails).split(";");
+        boolean[] validation = new boolean[saniticedEmails.length];
+        
+        for (int i = 0; i < saniticedEmails.length; i++) {
+            validation[i] = isValidEmail(saniticedEmails[i]);
+        }
+        
+        return validation;
+    }
+    
+    /**
      * Encondes raw text for subject into an UTF-8 encoded and properly enclosed string ready to be used in mailing.
      * @param subject
      * @return 

@@ -28,7 +28,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Sergio Flores, Isabel Servín
+ * @author Sergio Flores, Isabel Servín, Sergio Flores
  */
 public abstract class SLibUtils {
 
