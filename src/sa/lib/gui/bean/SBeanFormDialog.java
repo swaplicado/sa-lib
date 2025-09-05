@@ -119,8 +119,8 @@ public abstract class SBeanFormDialog extends JDialog implements SGuiForm {
 
         getContentPane().add(jpCommand, java.awt.BorderLayout.SOUTH);
 
-        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-480)/2, (screenSize.height-300)/2, 480, 300);
+        setSize(new java.awt.Dimension(480, 300));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSaveActionPerformed
@@ -188,9 +188,9 @@ public abstract class SBeanFormDialog extends JDialog implements SGuiForm {
     protected javax.swing.JButton jbCancel;
     protected javax.swing.JButton jbSave;
     private javax.swing.JPanel jpCommand;
-    private javax.swing.JPanel jpCommandCenter;
-    private javax.swing.JPanel jpCommandLeft;
-    private javax.swing.JPanel jpCommandRight;
+    protected javax.swing.JPanel jpCommandCenter;
+    protected javax.swing.JPanel jpCommandLeft;
+    protected javax.swing.JPanel jpCommandRight;
     private javax.swing.JPanel jpContainer;
     // End of variables declaration//GEN-END:variables
 
