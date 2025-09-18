@@ -16,7 +16,7 @@ import sa.lib.grid.SGridConsts;
 
 /**
  *
- * @author Sergio Flores
+ * @author Sergio Flores, Isabel Servín
  */
 public class SGridCellRendererIcon extends DefaultTableCellRenderer {
 
@@ -33,6 +33,8 @@ public class SGridCellRendererIcon extends DefaultTableCellRenderer {
     public static final ImageIcon moIconXmlAnnulled = new ImageIcon(new Object().getClass().getResource("/sa/lib/img/view_xml_annul.png"));
     public static final ImageIcon moIconXmlAnnulledPdf = new ImageIcon(new Object().getClass().getResource("/sa/lib/img/view_xml_annul_pdf.png"));
     public static final ImageIcon moIconXmlAnnulledXml = new ImageIcon(new Object().getClass().getResource("/sa/lib/img/view_xml_annul_xml.png"));
+    public static final ImageIcon moIconWait = new ImageIcon(new Object().getClass().getResource("/sa/lib/img/view_st_wait.png"));
+    public static final ImageIcon moIconFolder = new ImageIcon(new Object().getClass().getResource("/sa/lib/img/view_folder.png"));
 
     private JLabel moLabel;
 
@@ -96,6 +98,12 @@ public class SGridCellRendererIcon extends DefaultTableCellRenderer {
                 break;
             case SGridConsts.ICON_XML_ANNUL_XML:
                 moLabel.setIcon(moIconXmlAnnulledXml);
+                break;
+            case SGridConsts.ICON_WAIT:
+                moLabel.setIcon(moIconWait);
+                break;
+            case SGridConsts.ICON_FOLDER:
+                moLabel.setIcon(moIconFolder);
                 break;
             default:
                 moLabel.setIcon(moIconNull);
