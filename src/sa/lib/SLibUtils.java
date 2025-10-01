@@ -77,6 +77,8 @@ public abstract class SLibUtils {
     public static final SimpleDateFormat FileDateFormatDatetime = new SimpleDateFormat("yyyyMMdd HHmmss");
     public static final SimpleDateFormat IsoFormatDate = new SimpleDateFormat("yyyy-MM-dd");
     public static final SimpleDateFormat IsoFormatDatetime = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+    public static final SimpleDateFormat GuiFormatDate = new SimpleDateFormat("EEE dd/MMM/yyyy");
+    public static final SimpleDateFormat GuiFormatDateShort = new SimpleDateFormat("EEE dd/MMM/yy");
     public static final HashMap<Character, String> XmlEntityNamesMap = new HashMap<>();
     public static final HashMap<Character, String> HtmlEntityNamesMap = new HashMap<>();
     public static final char[] RandomKeyChars = new char[] { 

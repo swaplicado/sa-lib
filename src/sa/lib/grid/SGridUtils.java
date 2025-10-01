@@ -68,6 +68,7 @@ public abstract class SGridUtils {
     public static final SGridCellRendererDate CellRendererDate = new SGridCellRendererDate(SLibUtils.DateFormatDate);
     public static final SGridCellRendererDate CellRendererDatetime = new SGridCellRendererDate(SLibUtils.DateFormatDatetime);
     public static final SGridCellRendererDate CellRendererTime = new SGridCellRendererDate(SLibUtils.DateFormatTime);
+    public static final SGridCellRendererDate CellRendererDateGui = new SGridCellRendererDate(SLibUtils.GuiFormatDate);
     public static final SGridCellRendererIcon CellRendererIcon = new SGridCellRendererIcon();
     public static final SGridCellRendererIconCircle CellRendererIconCircle = new SGridCellRendererIconCircle();
 
@@ -267,6 +268,9 @@ public abstract class SGridUtils {
             case SGridConsts.COL_TYPE_DATE_TIME:
                 width = 45;
                 break;
+            case SGridConsts.COL_TYPE_DATE_GUI:
+                width = 100;
+                break;
             default:
                 SLibUtils.showException(SGridUtils.class.getName(), new Exception(SLibConsts.ERR_MSG_OPTION_UNKNOWN));
         }
@@ -394,6 +398,9 @@ public abstract class SGridUtils {
             case SGridConsts.COL_TYPE_DATE_TIME:
                 renderer = CellRendererTime;
                 break;
+            case SGridConsts.COL_TYPE_DATE_GUI:
+                renderer = CellRendererDateGui;
+                break;
             default:
                 SLibUtils.showException(SGridUtils.class.getName(), new Exception(SLibConsts.ERR_MSG_OPTION_UNKNOWN));
         }
@@ -467,6 +474,7 @@ public abstract class SGridUtils {
             case SGridConsts.COL_TYPE_DATE:
             case SGridConsts.COL_TYPE_DATE_DATETIME:
             case SGridConsts.COL_TYPE_DATE_TIME:
+            case SGridConsts.COL_TYPE_DATE_GUI:
                 type = SLibConsts.DATA_TYPE_DATE;
                 break;
             default:
@@ -562,6 +570,7 @@ public abstract class SGridUtils {
                 type = SGuiConsts.GUI_TYPE_TEXT;
                 break;
             case SGridConsts.COL_TYPE_DATE:
+            case SGridConsts.COL_TYPE_DATE_GUI:
                 type = SGuiConsts.GUI_TYPE_DATE;
                 break;
             case SGridConsts.COL_TYPE_DATE_DATETIME:
@@ -647,6 +656,7 @@ public abstract class SGridUtils {
             case SGridConsts.COL_TYPE_DATE:
             case SGridConsts.COL_TYPE_DATE_DATETIME:
             case SGridConsts.COL_TYPE_DATE_TIME:
+            case SGridConsts.COL_TYPE_DATE_GUI:
                 typeClass = Date.class;
                 break;
             default:
@@ -831,6 +841,9 @@ public abstract class SGridUtils {
                                 break;
                             case SGridConsts.COL_TYPE_DATE_TIME:
                                 dateFormat = SLibUtils.DateFormatTime;
+                                break;
+                            case SGridConsts.COL_TYPE_DATE_GUI:
+                                dateFormat = SLibUtils.GuiFormatDate;
                                 break;
                             default:
                         }
@@ -1020,6 +1033,7 @@ public abstract class SGridUtils {
                                 case SLibConsts.DATA_TYPE_DATE:
                                     switch (colType) {
                                         case SGridConsts.COL_TYPE_DATE:
+                                        case SGridConsts.COL_TYPE_DATE_GUI:
                                             buffer += SLibUtils.CsvFormatDate.format((Date) gridPane.getModel().getValueAt(rowModel, colModel));
                                             break;
                                         case SGridConsts.COL_TYPE_DATE_DATETIME:

@@ -76,6 +76,7 @@ public abstract class SGridConsts {
     public static final int COL_TYPE_DATE = 501;
     public static final int COL_TYPE_DATE_DATETIME = 502;
     public static final int COL_TYPE_DATE_TIME = 503;
+    public static final int COL_TYPE_DATE_GUI = 506;
 
     public static final int REFRESH_MODE_RESET = 1;
     public static final int REFRESH_MODE_RELOAD = 2;
