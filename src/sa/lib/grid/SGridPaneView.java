@@ -1658,6 +1658,87 @@ public abstract class SGridPaneView extends JPanel implements SGridPane, ListSel
 
         return panel;
     }
+    
+    /**
+     * Check if a row of type date is selected, otherwise inform user in GUI.
+     * @return 
+     */
+    public boolean isRowDataSelected() {
+        boolean isSelected = false;
+        
+        if (jtTable.getSelectedRowCount() != 1) {
+            miClient.showMsgBoxInformation(SGridConsts.MSG_SELECT_ROW);
+        }
+        else {
+            SGridRowView gridRow = (SGridRowView) getSelectedGridRow();
+
+            if (gridRow.getRowType() != SGridConsts.ROW_TYPE_DATA) {
+                miClient.showMsgBoxWarning(SGridConsts.ERR_MSG_ROW_TYPE_DATA);
+            }
+            else {
+                isSelected = true;
+            }
+        }
+        
+        return isSelected;
+    }
+    
+    /**
+     * Check if a row of type date and updatable is selected, otherwise inform user in GUI.
+     * @return 
+     */
+    public boolean isRowDataUpdatableSelected() {
+        boolean isSelected = false;
+        
+        if (jtTable.getSelectedRowCount() != 1) {
+            miClient.showMsgBoxInformation(SGridConsts.MSG_SELECT_ROW);
+        }
+        else {
+            SGridRowView gridRow = (SGridRowView) getSelectedGridRow();
+
+            if (gridRow.getRowType() != SGridConsts.ROW_TYPE_DATA) {
+                miClient.showMsgBoxWarning(SGridConsts.ERR_MSG_ROW_TYPE_DATA);
+            }
+            else if (!gridRow.isUpdatable()) {
+                miClient.showMsgBoxWarning(SDbConsts.MSG_REG_ + gridRow.getRowName() + SDbConsts.MSG_REG_NON_UPDATABLE);
+            }
+            else {
+                isSelected = true;
+            }
+        }
+        
+        return isSelected;
+    }
+    
+    /**
+     * Check if a row of type date, non-system and updatable is selected, otherwise inform user in GUI.
+     * @return 
+     */
+    public boolean isRowDataNonSystemUpdatableSelected() {
+        boolean isSelected = false;
+        
+        if (jtTable.getSelectedRowCount() != 1) {
+            miClient.showMsgBoxInformation(SGridConsts.MSG_SELECT_ROW);
+        }
+        else {
+            SGridRowView gridRow = (SGridRowView) getSelectedGridRow();
+
+            if (gridRow.getRowType() != SGridConsts.ROW_TYPE_DATA) {
+                miClient.showMsgBoxWarning(SGridConsts.ERR_MSG_ROW_TYPE_DATA);
+            }
+            else if (gridRow.isRowSystem()) {
+                miClient.showMsgBoxWarning(SDbConsts.MSG_REG_ + gridRow.getRowName() + SDbConsts.MSG_REG_IS_SYSTEM);
+            }
+            else if (!gridRow.isUpdatable()) {
+                miClient.showMsgBoxWarning(SDbConsts.MSG_REG_ + gridRow.getRowName() + SDbConsts.MSG_REG_NON_UPDATABLE);
+            }
+            else {
+                isSelected = true;
+            }
+        }
+        
+        return isSelected;
+    }
 
     /*
      * Overriden methods
