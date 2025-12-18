@@ -5,6 +5,9 @@
 
 package sa.lib;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.WeekFields;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -475,5 +478,15 @@ public abstract class SLibTimeUtils {
         else {
             return SLibUtils.DateFormatDateDay.format(startDate) + " al " + SLibUtils.DateFormatDateShortMonth.format(endDate);
         }
+    }
+    
+    /**
+     * Get the ISO week of week based year for given date.
+     * @param date Date.
+     * @return 
+     */
+    public static int getIsoWeekOfWeekBasedYear(final Date date) {
+        LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        return localDate.get(WeekFields.ISO.weekOfWeekBasedYear());
     }
 }
