@@ -37,6 +37,7 @@ public abstract class SLibUtils {
     public static final DecimalFormat DecimalFormatCalendarDay = new DecimalFormat("00");
     public static final DecimalFormat DecimalFormatCalendarMonth = new DecimalFormat("00");
     public static final DecimalFormat DecimalFormatCalendarYear = new DecimalFormat("0000");
+    public static final DecimalFormat DecimalFormatCalendarWeek = new DecimalFormat("00");
     public static final DecimalFormat DecimalFormatValue0D = new DecimalFormat("#,##0");
     public static final DecimalFormat DecimalFormatValue1D = new DecimalFormat("#,##0.0");
     public static final DecimalFormat DecimalFormatValue2D = new DecimalFormat("#,##0.00");

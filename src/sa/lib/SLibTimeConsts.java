@@ -18,6 +18,8 @@ public class SLibTimeConsts {
     public static final int WEEK_DAYS = 7;
     public static final int YEAR_DAYS = 365;
     public static final int YEAR_DAYS_STD = 360;
+    public static final int WEEK_MIN = 1;
+    public static final int WEEK_MAX = 53;
     
     public static final String TXT_DAY = "día";
     public static final String TXT_DAYS = "días";

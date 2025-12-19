@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import sa.lib.SLibConsts;
+import sa.lib.SLibTimeConsts;
 import sa.lib.SLibUtils;
 import sa.lib.gui.SGuiConsts;
 import sa.lib.gui.SGuiField;
@@ -35,9 +36,9 @@ public class SBeanFieldCalendarMonth extends JSpinner implements SGuiFieldCalend
 
     public SBeanFieldCalendarMonth() {
         msFieldName = "";
-        mnDefaultValue = 1;
-        mnMinInteger = 1;
-        mnMaxInteger = 12;
+        mnDefaultValue = SLibTimeConsts.MONTH_MIN;
+        mnMinInteger = SLibTimeConsts.MONTH_MIN;
+        mnMaxInteger = SLibTimeConsts.MONTH_MAX;
         moNextField = null;
         moNextButton = null;
         moFormButton = null;
@@ -59,10 +60,10 @@ public class SBeanFieldCalendarMonth extends JSpinner implements SGuiFieldCalend
     }
 
     /*
-     * Class private methods:
+     * Class protected methods:
      */
 
-    private void processKeyPressed(KeyEvent evt) {
+    protected void processKeyPressed(KeyEvent evt) {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (moNextButton != null && moNextButton.isEnabled()) {
                 moNextButton.requestFocus();
