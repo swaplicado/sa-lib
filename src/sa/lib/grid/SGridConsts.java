@@ -182,6 +182,8 @@ public abstract class SGridConsts {
     public static final String MSG_CONFIRM_RESET_SETTINGS = "¿Está seguro que desea limpiar las preferencias de la vista?";
     public static final String MSG_SELECT_ROW = "Se debe seleccionar un registro de la vista.";
     public static final String MSG_SELECT_ROWS = "Se debe seleccionar al menos un registro de la vista.";
+    public static final String MSG_SELECT_GRID_ROW = "Se debe seleccionar un registro de la tabla.";
+    public static final String MSG_SELECT_GRID_ROWS = "Se debe seleccionar al menos un registro de la tabla.";
 
     public static final String ERR_MSG_VAL_NOT_FOUND = "El valor buscado no fue encontrado.";
     public static final String ERR_MSG_ROW_TYPE_DATA = "El renglón no es de datos.";
