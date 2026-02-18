@@ -78,6 +78,7 @@ public abstract class SDbConsts {
     public static final String MSG_REG_DENIED_UPDATE = "El registro no se puede modificar. La acción ha sido denegada.";
     public static final String MSG_REG_DENIED_DISABLE = "El registro no se puede inhabilitar. La acción ha sido denegada.";
     public static final String MSG_REG_DENIED_DELETE = "El registro no se puede eliminar. La acción ha sido denegada.";
+    public static final String MSG_REG_DENIED_RIGHT = "El registro no se puede modificar; el usuario no tiene el permiso necesario para hacerlo.";
 
     public static final String ERR_MSG_REG_NOT_FOUND = "El registro no fue encontrado.";
     public static final String ERR_MSG_REG_NON_UPDATABLE = "El registro no es modificable.";

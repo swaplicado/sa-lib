@@ -1254,9 +1254,9 @@ public abstract class SGridPaneView extends JPanel implements SGridPane, ListSel
                 else if (!gridRow.isUpdatable()) {
                     miClient.showMsgBoxWarning(SDbConsts.MSG_REG_ + gridRow.getRowName() + SDbConsts.MSG_REG_NON_UPDATABLE);
                 }
-//                else if (moPaneSettings.isUserInsertApplying() && mnUserLevelAccess == SUtilConsts.LEV_AUTHOR && gridRow.getFkUserInsertId() != miClient.getSession().getUser().getPkUserId()) {
-//                    miClient.showMsgBoxWarning(SDbConsts.MSG_REG_DENIED_RIGHT);
-//                }
+                else if (moPaneSettings.isUserInsertApplying() && mnUserLevelAccess == SUtilConsts.LEV_AUTHOR && gridRow.getFkUserInsertId() != miClient.getSession().getUser().getPkUserId()) {
+                    miClient.showMsgBoxWarning(SDbConsts.MSG_REG_DENIED_RIGHT);
+                }
                 else {
                     params = moFormParams != null ? moFormParams : new SGuiParams();
                     params.setKey(gridRow.getRowPrimaryKey());
