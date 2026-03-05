@@ -699,6 +699,23 @@ public abstract class SLibUtils {
         return text.isEmpty() ? "" : textLeft(text, 1).toUpperCase() + text.substring(1).toLowerCase();
     }
 
+    public static String htmlToPlainText(final String html) {
+        String text = "";
+        
+        try {
+            javax.swing.text.html.HTMLEditorKit kit = new javax.swing.text.html.HTMLEditorKit();
+            javax.swing.text.Document doc = kit.createDefaultDocument();
+            kit.read(new java.io.StringReader(html), doc, 0);
+            text = doc.getText(0, doc.getLength());
+            text = text.replaceAll("\\s+", " ").trim();
+        }
+        catch (Exception e) {
+            SLibUtils.printException(SLibUtils.class.getName(), e);
+        }
+
+        return text;
+    }
+
     public static String[] textExplode(final String text, final String separator) {
         int pos = 0;
         int index = 0;
