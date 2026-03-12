@@ -122,6 +122,7 @@ public abstract class SGridConsts {
     public static final int ICON_XML_ANNUL_XML = 27;
     public static final int ICON_WAIT = 28;
     public static final int ICON_FOLDER = 29;
+    public static final int ICON_EXCL = 30;
     public static final int ICON_CIRC_WHITE = 101;
     public static final int ICON_CIRC_RED = 102;
     public static final int ICON_CIRC_YELLOW = 103;

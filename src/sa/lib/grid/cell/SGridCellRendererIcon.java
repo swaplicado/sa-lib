@@ -35,6 +35,7 @@ public class SGridCellRendererIcon extends DefaultTableCellRenderer {
     public static final ImageIcon moIconXmlAnnulledXml = new ImageIcon(new Object().getClass().getResource("/sa/lib/img/view_xml_annul_xml.png"));
     public static final ImageIcon moIconWait = new ImageIcon(new Object().getClass().getResource("/sa/lib/img/view_st_wait.png"));
     public static final ImageIcon moIconFolder = new ImageIcon(new Object().getClass().getResource("/sa/lib/img/view_folder.png"));
+    public static final ImageIcon moIconExclamation = new ImageIcon(new Object().getClass().getResource("/sa/lib/img/view_excl.png"));
 
     private JLabel moLabel;
 
@@ -104,6 +105,9 @@ public class SGridCellRendererIcon extends DefaultTableCellRenderer {
                 break;
             case SGridConsts.ICON_FOLDER:
                 moLabel.setIcon(moIconFolder);
+                break;
+            case SGridConsts.ICON_EXCL:
+                moLabel.setIcon(moIconExclamation);
                 break;
             default:
                 moLabel.setIcon(moIconNull);
