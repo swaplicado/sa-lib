@@ -27,11 +27,15 @@ import sa.lib.SLibUtils;
 public abstract class SGuiUtils {
 
     public static void setCursorWait(final SGuiClient client) {
-        client.getFrame().getRootPane().setCursor(new Cursor(Cursor.WAIT_CURSOR));
+        if (client.getFrame() != null) {
+            client.getFrame().getRootPane().setCursor(new Cursor(Cursor.WAIT_CURSOR));
+        }
     }
 
     public static void setCursorDefault(final SGuiClient client) {
-        client.getFrame().getRootPane().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        if (client.getFrame() != null) {
+            client.getFrame().getRootPane().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        }
     }
 
     public static void setWindowBounds(final Window window, final int width, final int height) {
