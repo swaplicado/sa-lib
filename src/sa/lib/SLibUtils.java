@@ -61,7 +61,7 @@ public abstract class SLibUtils {
     public static final SimpleDateFormat DateFormatDateShortMonthYear = new SimpleDateFormat("dd MMM yyyy");
     public static final SimpleDateFormat DateFormatDateShortMonth = new SimpleDateFormat("dd MMM yy");
     public static final SimpleDateFormat DateFormatDateDayMonthLong = new SimpleDateFormat("dd 'de' MMMM");
-    public static final SimpleDateFormat DateFormatDateMonthYearLong = new SimpleDateFormat("MMMM yy");
+    public static final SimpleDateFormat DateFormatDateMonthYearLong = new SimpleDateFormat("MMMM yyyy");
     public static final SimpleDateFormat DateFormatDateYearMonth = new SimpleDateFormat("yyyy-MM");
     public static final SimpleDateFormat DateFormatDateDayMonth = new SimpleDateFormat("dd MMM");
     public static final SimpleDateFormat DateFormatDateYear = new SimpleDateFormat("yyyy");
