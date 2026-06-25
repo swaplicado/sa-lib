@@ -678,6 +678,15 @@ public abstract class SLibUtils {
         return sql;
     }
 
+    public static String textToPathSafe(final String text) {
+        String pathSafe = textTrim(text);
+
+        pathSafe = pathSafe.replaceAll("\\\\", ""); // removes all backslashes
+        pathSafe = pathSafe.replaceAll("[/:*?\"<>|]", ""); // remove all other non path safe characters in a character class
+
+        return pathSafe;
+    }
+
     public static String textProperCase(final String text) {
         boolean spaceFound = true;
         char[] charArray = textTrim(text).toLowerCase().toCharArray();
